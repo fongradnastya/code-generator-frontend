@@ -4,8 +4,6 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 
-import { LoginForm } from '../../components/LoginForm';
-
 // Template from MUI docs: https://mui.com/getting-started/templates/
 const LoginPageComponent: FC = () => (
   <Container maxWidth="xs">
@@ -23,7 +21,6 @@ const LoginPageComponent: FC = () => (
       <Typography component="h1" variant="h5">
         Sign In
       </Typography>
-      <LoginForm />
     </Box>
   </Container>
 );
