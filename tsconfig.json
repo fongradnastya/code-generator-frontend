@@ -6,7 +6,7 @@
       "dom.iterable",
       "es2022"
     ],
-    "types": ["vite/client", "vite-plugin-svgr/client", "node", "jest", "@testing-library/jest-dom"],
+    "types": ["vite/client", "vite-plugin-svgr/client", "node", "@testing-library/jest-dom"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -26,7 +26,5 @@
   "include": [
     "src",
     "vite.config.ts",
-    "jestSetup.ts",
-    "jest.config.ts"
   ],
 }

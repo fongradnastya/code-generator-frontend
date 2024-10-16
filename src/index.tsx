@@ -1,12 +1,10 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
 import { App } from './App';
-import { setupStore } from './store';
 import { muiTheme } from './theme/muiTheme';
 
 const rootElement: HTMLElement | null = document.getElementById('root');
@@ -16,13 +14,11 @@ if (rootElement === null) {
 
 ReactDOM.createRoot(rootElement).render(
   <StrictMode>
-    <Provider store={setupStore()}>
-      <ThemeProvider theme={muiTheme}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={muiTheme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 );
 

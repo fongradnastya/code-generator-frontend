@@ -5,11 +5,10 @@ import { AppHeader } from './components/AppHeader';
 import { AppLoadingSpinner } from './components/AppLoadingSpinner';
 import { RootRouter } from './routes/RootRouter';
 import './theme';
-import { RestoreUserWrapper } from './components/RestoreUserWrapper';
 
 /** App component. */
 export const App: FC = () => (
-  <RestoreUserWrapper>
+  <>
     <Box
       sx={{
         display: 'flex',
@@ -24,5 +23,5 @@ export const App: FC = () => (
         </Suspense>
       </Container>
     </Box>
-  </RestoreUserWrapper>
+  </>
 );
