@@ -35,7 +35,7 @@ type Props = {
   onSubmit: SubmitHandler<LoginFormValues>;
 
   /** An array of error received from the server. */
-  serverErrors: ServerError[];
+  serverErrors: readonly ServerError[];
 };
 
 const LoginFormComponent: FC<Props> = ({

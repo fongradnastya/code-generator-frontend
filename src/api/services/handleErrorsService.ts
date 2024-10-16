@@ -26,7 +26,7 @@ export namespace HandleErrorsService {
    * @param formFields Form field names.
    */
   export function setErrors<T extends FieldValues>(
-    serverErrors: ServerError[],
+    serverErrors: readonly ServerError[],
     setError: UseFormSetError<T>,
     formFields: T,
   ): void {

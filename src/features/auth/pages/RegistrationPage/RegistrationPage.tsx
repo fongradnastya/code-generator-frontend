@@ -6,16 +6,16 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-import { LoginForm } from '../../components/LoginForm';
+import { RegistrationForm } from '../../components/RegistrationForm';
 
-import styles from './LoginPage.module.css';
+import styles from './RegistrationPage.module.css';
 
-const LoginPageComponent: FC = () => {
-  const open = useSelector(selectIsDrawerOpen);
-  const registrationUrl = '/registration';
+const RegistrationPageComponent: FC = () => {
+  const isDrawerOpen = useSelector(selectIsDrawerOpen);
+  const loginUrl = '/login';
 
   return (
-    <main className={`${styles.layout} ${open ? styles.layout_open : ''}`}>
+    <main className={`${styles.layout} ${isDrawerOpen ? styles.layout_open : ''}`}>
       <Paper
         elevation={3}
         className={styles.layout__card}
@@ -24,19 +24,19 @@ const LoginPageComponent: FC = () => {
           variant="h5"
           component="h5"
         >
-          Login
+          Registration
         </Typography>
-        <LoginForm
+        <RegistrationForm
           onSubmit={() => null}
           serverErrors={[]}
         />
         <Typography component="p">
-          Don`t have an account?
+          Already have an account?
           <Link
             component={NavLink}
-            to={registrationUrl}
+            to={loginUrl}
           >
-            Register
+            Login
           </Link>
         </Typography>
       </Paper>
@@ -44,5 +44,5 @@ const LoginPageComponent: FC = () => {
   );
 };
 
-/** User login page. */
-export const LoginPage = memo(LoginPageComponent);
+/** User registration page. */
+export const RegistrationPage = memo(RegistrationPageComponent);
