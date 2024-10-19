@@ -7,17 +7,11 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { selectIsDrawerOpen } from 'src/store/drawer/selectors';
 import { setOpen } from 'src/store/drawer/slice';
 import { type NavigationProps } from 'src/utils/types/navigationProps';
 import { useAppSelector, useAppDispatch } from 'src/store';
-import { NavLink } from 'react-router-dom';
 
 import { NavigationList } from '../NavigationList';
 
@@ -27,9 +21,9 @@ import styles from './Header.module.css';
 const DRAWER_WIDTH = 280;
 
 const mainRoutes: NavigationProps[] = [
-  { name: 'Anime', path: '/anime' },
-  { name: 'Genres', path: '/genre' },
-  { name: 'Studios', path: '/anime' },
+  { name: 'My Projects', path: '/projects' },
+  { name: 'New Project', path: '/new' },
+  { name: 'Suggest Project', path: '/suggest' },
 ];
 
 const loginRoutes: NavigationProps[] = [
@@ -103,18 +97,6 @@ const HeaderComponent: FC = () => {
           onClick={handleNavigation}
         />
         <Divider />
-        <ListItem key="logout" disablePadding>
-          <ListItemButton
-            component={NavLink}
-            to="/login"
-            onClick={() => null}
-          >
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
         <NavigationList
           items={loginRoutes}
           currentPage={currentPage}
