@@ -1,27 +1,22 @@
 import { type FC, Suspense } from 'react';
-import { Box, Container } from '@mui/material';
+import { Provider } from 'react-redux';
 
-import { AppHeader } from './components/AppHeader';
-import { AppLoadingSpinner } from './components/AppLoadingSpinner';
+import { Loader } from './components/Loader';
 import { RootRouter } from './routes/RootRouter';
+import { store } from './store';
+import { Header } from './components/Header';
+
+import styles from './App.module.css';
 import './theme';
 
-/** App component. */
+/** The main app component. */
 export const App: FC = () => (
-  <>
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-      }}
-    >
-      <AppHeader />
-      <Container component="main" sx={{ padding: 2, flexGrow: 1 }}>
-        <Suspense fallback={<AppLoadingSpinner />}>
-          <RootRouter />
-        </Suspense>
-      </Container>
-    </Box>
-  </>
+  <Provider store={store}>
+    <Suspense fallback={<Loader/>}>
+      <div className={styles.main}>
+        <Header/>
+        <RootRouter />
+      </div>
+    </Suspense>
+  </Provider>
 );

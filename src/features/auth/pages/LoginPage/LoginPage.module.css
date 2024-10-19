@@ -6,6 +6,8 @@
 
   /* Set a negative margin when side-menu is closed */
   margin-left: calc(-1 * var(--sidebar-width));
+  margin-top: var(--header-height);
+  background-color: #E0E0E0;
 }
 
 .layout_open {

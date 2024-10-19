@@ -15,10 +15,10 @@ const RegistrationPageComponent: FC = () => {
   const loginUrl = '/login';
 
   return (
-    <main className={`${styles.layout} ${isDrawerOpen ? styles.layout_open : ''}`}>
+    <main className={`${styles.layout} ${isDrawerOpen ? styles.layoutOpen : ''}`}>
       <Paper
         elevation={3}
-        className={styles.layout__card}
+        className={styles.layoutCard}
       >
         <Typography
           variant="h5"
