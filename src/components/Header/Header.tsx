@@ -56,8 +56,12 @@ const HeaderComponent: FC = () => {
 
   return (
     <>
-      <MuiAppBar className={clsx(styles['main__app-bar'], isDrawerOpen && styles['main__app-bar_open'])}>
-        <Toolbar className={styles.main__toolbar}>
+      <MuiAppBar
+        className={clsx(styles['main__app-bar'], isDrawerOpen && styles['main__app-bar_open'])}
+      >
+        <Toolbar
+          className={styles.main__toolbar}
+        >
           <IconButton
             className={styles['main__toolbar-icon']}
             color="inherit"
@@ -72,7 +76,7 @@ const HeaderComponent: FC = () => {
             component="h6"
             noWrap
           >
-            Anime App
+            PolyStarter
           </Typography>
         </Toolbar>
       </MuiAppBar>

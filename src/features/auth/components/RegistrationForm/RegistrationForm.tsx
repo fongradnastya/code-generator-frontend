@@ -84,7 +84,7 @@ const RegistrationFormComponent: FC<Props> = ({
             fullWidth
             error={errors.email != null}
             helperText={errors?.email?.message}
-            className={styles.form__control}
+            className={styles.formControl}
           />
         )}
       />
@@ -98,7 +98,7 @@ const RegistrationFormComponent: FC<Props> = ({
             fullWidth
             error={errors.firstName != null}
             helperText={errors?.firstName?.message}
-            className={styles.form__control}
+            className={styles.formControl}
           />
         )}
       />
@@ -112,7 +112,7 @@ const RegistrationFormComponent: FC<Props> = ({
             fullWidth
             error={errors.lastName != null}
             helperText={errors?.lastName?.message}
-            className={styles.form__control}
+            className={styles.formControl}
           />
         )}
       />
@@ -145,7 +145,7 @@ const RegistrationFormComponent: FC<Props> = ({
       <Typography
         component="p"
         gutterBottom
-        className={styles.form__error}
+        className={styles.formError}
       >
         { errors?.root?.message }
       </Typography>
@@ -153,7 +153,7 @@ const RegistrationFormComponent: FC<Props> = ({
         type="submit"
         fullWidth
         variant="contained"
-        className={styles.form__button}
+        className={styles.formButton}
       >
         Register
       </Button>

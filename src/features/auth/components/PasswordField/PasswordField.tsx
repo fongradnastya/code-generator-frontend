@@ -43,7 +43,7 @@ const PasswordFieldComponent: FC<Props> = ({
   return (
     <FormControl
       error={hasError}
-      className={styles.form__control}
+      className={styles.formControl}
     >
       <InputLabel>
         {label}
@@ -53,7 +53,10 @@ const PasswordFieldComponent: FC<Props> = ({
         type={showPassword ? 'text' : 'password'}
         autoComplete="password"
         endAdornment={(
-          <InputAdornment position="end">
+          <InputAdornment
+            position="end"
+            className={styles.icon}
+          >
             <IconButton
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}

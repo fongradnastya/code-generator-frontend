@@ -67,7 +67,7 @@ const LoginFormComponent: FC<Props> = ({
             fullWidth
             error={errors.email != null}
             helperText={errors?.email?.message}
-            className={styles.form__control}
+            className={styles.formControl}
           />
         )}
       />
@@ -86,7 +86,7 @@ const LoginFormComponent: FC<Props> = ({
       <Typography
         component="p"
         gutterBottom
-        className={styles.form__error}
+        className={styles.formError}
       >
         { errors?.root?.message }
       </Typography>
@@ -94,7 +94,7 @@ const LoginFormComponent: FC<Props> = ({
         type="submit"
         fullWidth
         variant="contained"
-        className={styles.form__button}
+        className={styles.formButton}
       >
         Login
       </Button>
