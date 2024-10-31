@@ -1,6 +1,6 @@
 import { memo, type FC } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { TextField, Checkbox, FormControlLabel, Select, MenuItem, Button } from '@mui/material';
+import { TextField, Checkbox, FormControlLabel, Select, MenuItem, Button, InputLabel, FormControl } from '@mui/material';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -20,13 +20,23 @@ const formData = {
   debug: 'n',
 };
 
+const defaultValues = {
+  project_name: formData.project_name,
+  project_slug: formData.project_slug,
+  description: formData.description,
+  author_name: formData.author_name,
+  email: formData.email,
+  open_source_license: formData.open_source_license[0],
+  username_type: formData.username_type[0],
+  editor: formData.editor[0],
+  cloud_provider: formData.cloud_provider[0],
+  ci_tool: formData.ci_tool[0],
+  debug: formData.debug,
+};
+
 const schema = z.object({
-  project_name: z
-    .string()
-    .min(1, { message: 'Project name is required' }),
-  email: z
-    .string()
-    .min(1, { message: 'Project name is required' })
+  project_name: z.string().min(1, { message: 'Project name is required' }),
+  email: z.string().min(1, { message: 'Email is required' })
     .email('Invalid email address'),
 });
 
@@ -35,7 +45,7 @@ type FormSchema = z.infer<typeof schema>;
 const ProjectFormComponent: FC = () => {
   const { handleSubmit, control, register } = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    defaultValues: formData,
+    defaultValues,
   });
 
   const onSubmit = (data: FormSchema) => {
@@ -46,13 +56,20 @@ const ProjectFormComponent: FC = () => {
   const renderField = (key: string, value: string | string[]) => {
     if (Array.isArray(value)) {
       return (
-        <Controller
-          name={key as keyof FormSchema}
-          control={control}
-          render={({ field }) => (
-            <Select {...field} fullWidth>
-              {value
-                .map((option: string) => (
+        <FormControl fullWidth>
+          <InputLabel id={`${key}-label`}>
+            {key}
+          </InputLabel>
+          <Controller
+            name={key as keyof FormSchema}
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                labelId={`${key}-label`}
+                label={key}
+              >
+                {value.map((option: string) => (
                   <MenuItem
                     key={option}
                     value={option}
@@ -60,9 +77,10 @@ const ProjectFormComponent: FC = () => {
                     {option}
                   </MenuItem>
                 ))}
-            </Select>
-          )}
-        />
+              </Select>
+            )}
+          />
+        </FormControl>
       );
     }
     if (typeof value === 'string' && (value === 'y' || value === 'n')) {
@@ -72,7 +90,13 @@ const ProjectFormComponent: FC = () => {
           control={control}
           render={({ field }) => (
             <FormControlLabel
-              control={<Checkbox {...field} checked={field.value === 'y'} />}
+              control={(
+                <Checkbox
+                  {...field}
+                  checked={field.value === 'y'}
+                  onChange={e => field.onChange(e.target.checked ? 'y' : 'n')}
+                />
+              )}
               label={key}
             />
           )}
@@ -84,27 +108,18 @@ const ProjectFormComponent: FC = () => {
         {...register(key as keyof FormSchema)}
         fullWidth
         label={key}
-        defaultValue={value}
       />
     );
   };
 
   return (
-    <form
-      className={styles.form}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      {Object.entries(formData)
-        .map(([key, value]) => (
-          <div key={key} style={{ marginBottom: '16px' }}>
-            {renderField(key, value)}
-          </div>
-        ))}
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-      >
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      {Object.entries(formData).map(([key, value]) => (
+        <div key={key} style={{ marginBottom: '16px' }}>
+          {renderField(key, value)}
+        </div>
+      ))}
+      <Button type="submit" variant="contained" color="primary">
         Submit
       </Button>
     </form>
