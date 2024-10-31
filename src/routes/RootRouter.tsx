@@ -4,6 +4,7 @@ import { Navigate, type RouteObject, useRoutes } from 'react-router-dom';
 import { authRoutes } from 'src/features/auth/routes';
 import { homeRoutes } from 'src/features/home/routes';
 import { codeEditorRoutes } from 'src/features/codeEditor/routes';
+import { projectCreationRoutes } from 'src/features/projectCreation/routes';
 
 const routes: RouteObject[] = [
   {
@@ -13,6 +14,7 @@ const routes: RouteObject[] = [
   ...homeRoutes,
   ...authRoutes,
   ...codeEditorRoutes,
+  ...projectCreationRoutes,
 ];
 
 /** Root router. */

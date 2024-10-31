@@ -48,7 +48,7 @@ const EditorPageComponent: FC = () => {
       </div>
       {file && (
         <Editor
-          height="80vh"
+          height="85vh"
           theme="vs-light"
           path={file.name}
           defaultLanguage={file.language}

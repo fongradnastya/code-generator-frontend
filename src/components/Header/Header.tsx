@@ -22,7 +22,7 @@ const DRAWER_WIDTH = 280;
 
 const mainRoutes: NavigationProps[] = [
   { name: 'My Projects', path: '/projects' },
-  { name: 'New Project', path: '/new' },
+  { name: 'New Project', path: '/project' },
   { name: 'Suggest Project', path: '/suggest' },
   { name: 'Code Editor', path: '/editor' },
 ];
