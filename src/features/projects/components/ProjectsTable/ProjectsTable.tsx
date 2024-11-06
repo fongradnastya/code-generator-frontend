@@ -14,6 +14,7 @@ import { getProjectsComparator } from '../../utils/comparators';
 import { ProjectTableToolbar } from '../ProjectTableToolbar';
 import { ProjectsTableHead } from '../ProjectsTableHead';
 import { ProjectTableRow } from '../ProjectTableRow';
+import { useTableRowSelect } from '../../hooks/useTableRowSelect';
 
 import styles from './ProjectTable.module.css';
 
@@ -23,12 +24,18 @@ type Props = {
   readonly projects: readonly ProjectInfo[];
 };
 
+const rowsPerPageOptions: readonly number[] = [5, 10, 15];
+
 const ProjectTableComponent: FC<Props> = ({ projects }) => {
-  const [order, setOrder] = useState<Order>(Order.Ascending);
+  const [order, setOrder] = useState(Order.Ascending);
   const [orderBy, setOrderBy] = useState<keyof ProjectInfo>('calories');
-  const [selected, setSelected] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const {
+    selected,
+    handleSelectAllClick,
+    handleRowClick,
+  } = useTableRowSelect(projects);
 
   const handleRequestSort = useCallback((
     _event: MouseEvent<unknown>,
@@ -38,34 +45,6 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
     setOrder(isAscending ? Order.Descending : Order.Ascending);
     setOrderBy(property);
   }, [order, orderBy]);
-
-  const handleSelectAllClick = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = projects.map(n => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  }, [projects]);
-
-  const handleRowClick = useCallback((id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-    setSelected(newSelected);
-  }, [selected]);
 
   const handleChangePage = useCallback((_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -126,7 +105,7 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={rowsPerPageOptions}
           component="div"
           count={projects.length}
           rowsPerPage={rowsPerPage}

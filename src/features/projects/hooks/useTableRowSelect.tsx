@@ -1,0 +1,44 @@
+import { useState, useCallback, type ChangeEvent } from 'react';
+import { type ProjectInfo } from 'src/models/projectInfo';
+
+/**
+ * Use table row select hook.
+ * @param projects Projects to be selected.
+ */
+export const useTableRowSelect = (projects: readonly ProjectInfo[]) => {
+  const [selected, setSelected] = useState<readonly number[]>([]);
+
+  const handleSelectAllClick = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = projects.map(n => n.id);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  }, [projects]);
+
+  const handleRowClick = useCallback((id: number) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: readonly number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    setSelected(newSelected);
+  }, [selected]);
+
+  return {
+    selected,
+    handleSelectAllClick,
+    handleRowClick,
+  };
+};
