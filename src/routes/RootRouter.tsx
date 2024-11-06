@@ -5,6 +5,7 @@ import { authRoutes } from 'src/features/auth/routes';
 import { homeRoutes } from 'src/features/home/routes';
 import { codeEditorRoutes } from 'src/features/codeEditor/routes';
 import { projectCreationRoutes } from 'src/features/projectCreation/routes';
+import { projectsRoutes } from 'src/features/projects/routes';
 
 const routes: RouteObject[] = [
   {
@@ -15,6 +16,7 @@ const routes: RouteObject[] = [
   ...authRoutes,
   ...codeEditorRoutes,
   ...projectCreationRoutes,
+  ...projectsRoutes,
 ];
 
 /** Root router. */
