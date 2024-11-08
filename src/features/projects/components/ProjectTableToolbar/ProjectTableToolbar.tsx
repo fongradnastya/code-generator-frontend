@@ -44,7 +44,7 @@ const ProjectTableToolbarComponent: FC<Props> = ({ numSelected }) => (
         id="tableTitle"
         component="div"
       >
-        Nutrition
+        Created projects
       </Typography>
     )}
     {numSelected > 0 ? (

@@ -42,18 +42,18 @@ function createData(
 /** Projects. */
 export const initialProjects = [
   createData(1, 'Cupcake', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(2, 'Donut', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(3, 'Eclair', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(4, 'Frozen yoghurt', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(5, 'Gingerbread', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(6, 'Honeycomb', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(7, 'Ice cream sandwich', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(8, 'Jelly Bean', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(9, 'KitKat', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(10, 'Lollipop', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(11, 'Marshmallow', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(12, 'Nougat', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
-  createData(13, 'Oreo', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(2, 'Donut', new Date('06.11.2024'), 'Python 3.2.2', ProjectType.FastApi, ProjectStatus.Build),
+  createData(3, 'Eclair', new Date('07.11.2024'), 'Java 17', ProjectType.Spring, ProjectStatus.Cancelled),
+  createData(4, 'Frozen yoghurt', new Date('08.10.2024'), 'Kotlin 3', ProjectType.Spring, ProjectStatus.Draft),
+  createData(5, 'Gingerbread', new Date('01.10.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Draft),
+  createData(6, 'Honeycomb', new Date('03.10.2024'), 'Python 2.2.8', ProjectType.Django, ProjectStatus.Build),
+  createData(7, 'Ice cream sandwich', new Date('10.10.2024'), 'Python 2.2.9', ProjectType.Django, ProjectStatus.Suggested),
+  createData(8, 'Jelly Bean', new Date('10.09.2024'), 'Java 16', ProjectType.Spring, ProjectStatus.Build),
+  createData(9, 'KitKat', new Date('08.09.2024'), 'Python 3.1.1', ProjectType.FastApi, ProjectStatus.Suggested),
+  createData(10, 'Lollipop', new Date('05.09.2024'), 'Kotlin 5', ProjectType.Spring, ProjectStatus.Cancelled),
+  createData(11, 'Marshmallow', new Date('04.09.2024'), 'Java 17', ProjectType.Spring, ProjectStatus.Build),
+  createData(12, 'Nougat', new Date('08.08.2024'), 'Python 3.2.2', ProjectType.FastApi, ProjectStatus.Draft),
+  createData(13, 'Oreo', new Date('11.08.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
 ];
 
 const ProjectsPageComponent: FC = () => {
@@ -66,7 +66,7 @@ const ProjectsPageComponent: FC = () => {
           variant="h5"
           component="h5"
         >
-          Project
+          Projects
         </Typography>
         <ProjectTable
           projects={projects}
