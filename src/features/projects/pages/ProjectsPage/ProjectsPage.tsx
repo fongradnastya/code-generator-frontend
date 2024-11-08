@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import { selectIsDrawerOpen } from 'src/store/drawer/selectors';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { type ProjectInfo } from 'src/models/projectInfo';
+import { type Project } from 'src/models/project';
+import { ProjectStatus } from 'src/models/projectStatus';
+import { ProjectType } from 'src/models/projectType';
 
 import { ProjectTable } from '../../components/ProjectsTable';
 
@@ -12,45 +14,46 @@ import styles from './ProjectsPage.module.css';
 /**
  * 1.
  * @param id 1.
- * @param name 1.
- * @param calories 1.
- * @param fat 1.
- * @param carbs 1.
- * @param protein 1.
+ * @param projectName 1.
+ * @param creationDate 1.
+ * @param projectLanguage 1.
+ * @param projectType 1.
+ * @param status 1.
+ * @returns
  */
 function createData(
   id: number,
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-): ProjectInfo {
+  projectName: string,
+  creationDate: Date,
+  projectLanguage: string,
+  projectType: ProjectType,
+  status: ProjectStatus,
+): Project {
   return {
     id,
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    projectName,
+    creationDate,
+    projectLanguage,
+    projectType,
+    status,
   };
 }
 
 /** Projects. */
 export const initialProjects = [
-  createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-  createData(2, 'Donut', 452, 25.0, 51, 4.9),
-  createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-  createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-  createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-  createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-  createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-  createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-  createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-  createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-  createData(13, 'Oreo', 437, 18.0, 63, 4.0),
+  createData(1, 'Cupcake', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(2, 'Donut', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(3, 'Eclair', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(4, 'Frozen yoghurt', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(5, 'Gingerbread', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(6, 'Honeycomb', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(7, 'Ice cream sandwich', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(8, 'Jelly Bean', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(9, 'KitKat', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(10, 'Lollipop', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(11, 'Marshmallow', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(12, 'Nougat', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
+  createData(13, 'Oreo', new Date('08.11.2024'), 'Python 3.1', ProjectType.Django, ProjectStatus.Suggested),
 ];
 
 const ProjectsPageComponent: FC = () => {

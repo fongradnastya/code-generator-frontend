@@ -7,8 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { type ProjectInfo } from 'src/models/projectInfo';
 import { Order } from 'src/models/order';
+import { type Project } from 'src/models/project';
+import { type TableColumn } from 'src/models/tableColumn';
 
 import { getProjectsComparator } from '../../utils/comparators';
 import { ProjectTableToolbar } from '../ProjectTableToolbar';
@@ -18,19 +19,42 @@ import { useTableRowSelect } from '../../hooks/useTableRowSelect';
 
 import styles from './ProjectTable.module.css';
 
+const columns: readonly TableColumn<Project>[] = [
+  {
+    accessor: 'projectName',
+    label: 'Project Name',
+  },
+  {
+    accessor: 'creationDate',
+    label: 'Creation Date',
+  },
+  {
+    accessor: 'projectLanguage',
+    label: 'Language',
+  },
+  {
+    accessor: 'projectType',
+    label: 'Type',
+  },
+  {
+    accessor: 'status',
+    label: 'Status',
+  },
+];
+
 type Props = {
 
   /** Projects info. */
-  readonly projects: readonly ProjectInfo[];
+  readonly projects: readonly Project[];
 };
 
-const rowsPerPageOptions: readonly number[] = [5, 10, 15];
+const PAGE_SIZE_OPTIONS = [5, 10, 25];
 
 const ProjectTableComponent: FC<Props> = ({ projects }) => {
   const [order, setOrder] = useState(Order.Ascending);
-  const [orderBy, setOrderBy] = useState<keyof ProjectInfo>('calories');
+  const [orderBy, setOrderBy] = useState<keyof Project>('id');
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE_OPTIONS[0]);
   const {
     selected,
     handleSelectAllClick,
@@ -39,7 +63,7 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
 
   const handleRequestSort = useCallback((
     _event: MouseEvent<unknown>,
-    property: keyof ProjectInfo,
+    property: keyof Project,
   ) => {
     const isAscending = orderBy === property && order === Order.Ascending;
     setOrder(isAscending ? Order.Descending : Order.Ascending);
@@ -79,6 +103,7 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
             size="medium"
           >
             <ProjectsTableHead
+              tableColumns={columns}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -89,8 +114,9 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
             <TableBody>
               {visibleRows.map((row, index) => (
                 <ProjectTableRow
+                  tableColumns={columns}
                   key={index}
-                  projectInfo={row}
+                  project={row}
                   isItemSelected={selected.includes(row.id)}
                   labelId={`table-checkbox-${index}`}
                   onRowClick={handleRowClick}
@@ -105,7 +131,7 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={rowsPerPageOptions}
+          rowsPerPageOptions={PAGE_SIZE_OPTIONS}
           component="div"
           count={projects.length}
           rowsPerPage={rowsPerPage}

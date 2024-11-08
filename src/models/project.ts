@@ -4,6 +4,9 @@ import { type ProjectStatus } from './projectStatus';
 /** Configured project info. */
 export type Project = {
 
+  /** Project id. */
+  readonly id: number;
+
   /** Project name. */
   readonly projectName: string;
 

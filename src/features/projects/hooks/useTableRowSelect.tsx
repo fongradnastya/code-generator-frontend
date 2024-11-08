@@ -1,11 +1,11 @@
 import { useState, useCallback, type ChangeEvent } from 'react';
-import { type ProjectInfo } from 'src/models/projectInfo';
+import { type Project } from 'src/models/project';
 
 /**
  * Use table row select hook.
  * @param projects Projects to be selected.
  */
-export const useTableRowSelect = (projects: readonly ProjectInfo[]) => {
+export const useTableRowSelect = (projects: readonly Project[]) => {
   const [selected, setSelected] = useState<readonly number[]>([]);
 
   const handleSelectAllClick = useCallback((event: ChangeEvent<HTMLInputElement>) => {

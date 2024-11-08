@@ -1,4 +1,4 @@
-import { type ProjectInfo } from 'src/models/projectInfo';
+import { type Project } from 'src/models/project';
 import { Order } from 'src/models/order';
 
 /**
@@ -22,12 +22,12 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
  * @param order 1.
  * @param orderBy 1.
  */
-export function getProjectsComparator<Key extends keyof ProjectInfo>(
+export function getProjectsComparator<Key extends keyof Project>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  a: { [key in Key]: number | string | Date },
+  b: { [key in Key]: number | string | Date },
 ) => number {
   return order === Order.Descending ?
     (a, b) => descendingComparator(a, b, orderBy) :

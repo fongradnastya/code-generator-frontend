@@ -2,14 +2,18 @@ import { type FC, memo } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import { type ProjectInfo } from 'src/models/projectInfo';
+import { type TableColumn } from 'src/models/tableColumn';
+import { type Project } from 'src/models/project';
 
 import styles from './ProjectTableRow.module.css';
 
 type Props = {
 
   /** 1. */
-  readonly projectInfo: ProjectInfo;
+  readonly tableColumns: readonly TableColumn<Project>[];
+
+  /** 1. */
+  readonly project: Project;
 
   /** 1. */
   readonly isItemSelected: boolean;
@@ -22,18 +26,18 @@ type Props = {
 };
 
 const ProjectTableRowComponent: FC<Props> = ({
-  projectInfo,
+  project,
   isItemSelected,
   labelId,
   onRowClick,
 }) => (
   <TableRow
     hover
-    onClick={() => onRowClick(projectInfo.id)}
+    onClick={() => onRowClick(project.id)}
     role="checkbox"
     aria-checked={isItemSelected}
     tabIndex={-1}
-    key={projectInfo.id}
+    key={project.id}
     selected={isItemSelected}
     className={styles.tableRow}
   >
@@ -46,25 +50,20 @@ const ProjectTableRowComponent: FC<Props> = ({
         }}
       />
     </TableCell>
-    <TableCell
-      component="th"
-      id={labelId}
-      scope="row"
-      padding="none"
-    >
-      {projectInfo.name}
+    <TableCell align="left">
+      {project.projectName}
     </TableCell>
-    <TableCell align="right">
-      {projectInfo.calories}
+    <TableCell align="left">
+      {project.creationDate.toISOString()}
     </TableCell>
-    <TableCell align="right">
-      {projectInfo.fat}
+    <TableCell align="left">
+      {project.projectLanguage}
     </TableCell>
-    <TableCell align="right">
-      {projectInfo.carbs}
+    <TableCell align="left">
+      {project.projectType}
     </TableCell>
-    <TableCell align="right">
-      {projectInfo.protein}
+    <TableCell align="left">
+      {project.status}
     </TableCell>
   </TableRow>
 );

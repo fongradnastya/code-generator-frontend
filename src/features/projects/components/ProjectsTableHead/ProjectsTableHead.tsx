@@ -6,64 +6,20 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
-import { type ProjectInfo } from 'src/models/projectInfo';
+import { type Project } from 'src/models/project';
 import { type Order } from 'src/models/order';
-
-type HeadCell = {
-
-  /** 1. */
-  readonly disablePadding: boolean;
-
-  /** 1. */
-  readonly id: keyof ProjectInfo;
-
-  /** 1. */
-  readonly label: string;
-
-  /** 1. */
-  readonly numeric: boolean;
-};
-
-const headCells: readonly HeadCell[] = [
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Dessert (100g serving)',
-  },
-  {
-    id: 'calories',
-    numeric: true,
-    disablePadding: false,
-    label: 'Calories',
-  },
-  {
-    id: 'fat',
-    numeric: true,
-    disablePadding: false,
-    label: 'Fat (g)',
-  },
-  {
-    id: 'carbs',
-    numeric: true,
-    disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
-  },
-];
+import { type TableColumn } from 'src/models/tableColumn';
 
 type Props = {
+
+  /** 1. */
+  readonly tableColumns: readonly TableColumn<Project>[];
 
   /** 1. */
   readonly numSelected: number;
 
   /** 1. */
-  readonly onRequestSort: (event: MouseEvent<unknown>, property: keyof ProjectInfo) => void;
+  readonly onRequestSort: (event: MouseEvent<unknown>, property: keyof Project) => void;
 
   /** 1. */
   readonly onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -79,6 +35,7 @@ type Props = {
 };
 
 const ProjectsTableHeadComponent: FC<Props> = ({
+  tableColumns,
   onSelectAllClick,
   order,
   orderBy,
@@ -87,7 +44,7 @@ const ProjectsTableHeadComponent: FC<Props> = ({
   onRequestSort,
 }) => {
   const createSortHandler =
-    (property: keyof ProjectInfo) => (event: MouseEvent<unknown>) => {
+    (property: keyof Project) => (event: MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -105,20 +62,19 @@ const ProjectsTableHeadComponent: FC<Props> = ({
             }}
           />
         </TableCell>
-        {headCells.map(headCell => (
+        {tableColumns.map(column => (
           <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
+            key={column.accessor}
+            align={column.align}
+            sortDirection={orderBy === column.accessor ? order : false}
           >
             <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
+              active={orderBy === column.accessor}
+              direction={orderBy === column.accessor ? order : 'asc'}
+              onClick={createSortHandler(column.accessor)}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
+              {column.label}
+              {orderBy === column.accessor ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
