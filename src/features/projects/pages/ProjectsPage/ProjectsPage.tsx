@@ -12,14 +12,13 @@ import { ProjectTable } from '../../components/ProjectsTable';
 import styles from './ProjectsPage.module.css';
 
 /**
- * 1.
- * @param id 1.
- * @param projectName 1.
- * @param creationDate 1.
- * @param projectLanguage 1.
- * @param projectType 1.
- * @param status 1.
- * @returns
+ * Creates projects.
+ * @param id Project id.
+ * @param projectName Project name.
+ * @param creationDate Project creation date.
+ * @param projectLanguage Project language.
+ * @param projectType Project type.
+ * @param status Project status.
  */
 function createData(
   id: number,

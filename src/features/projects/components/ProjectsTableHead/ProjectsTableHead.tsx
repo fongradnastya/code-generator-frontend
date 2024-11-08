@@ -12,25 +12,25 @@ import { type TableColumn } from 'src/models/tableColumn';
 
 type Props = {
 
-  /** 1. */
+  /** Table columns. */
   readonly tableColumns: readonly TableColumn<Project>[];
 
-  /** 1. */
+  /** Number of selected rows. */
   readonly numSelected: number;
 
-  /** 1. */
+  /** Handles sort requests. */
   readonly onRequestSort: (event: MouseEvent<unknown>, property: keyof Project) => void;
 
-  /** 1. */
+  /** Handles select all clicks. */
   readonly onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
 
-  /** 1. */
+  /** Tables order. */
   readonly order: Order;
 
-  /** 1. */
+  /** Column that table is ordered by. */
   readonly orderBy: string;
 
-  /** 1. */
+  /** Rows number. */
   readonly rowCount: number;
 };
 

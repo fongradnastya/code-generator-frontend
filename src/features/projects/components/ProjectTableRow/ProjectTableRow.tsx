@@ -2,26 +2,22 @@ import { type FC, memo } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import { type TableColumn } from 'src/models/tableColumn';
 import { type Project } from 'src/models/project';
 
 import styles from './ProjectTableRow.module.css';
 
 type Props = {
 
-  /** 1. */
-  readonly tableColumns: readonly TableColumn<Project>[];
-
-  /** 1. */
+  /** Project info. */
   readonly project: Project;
 
-  /** 1. */
+  /** Is row selected. */
   readonly isItemSelected: boolean;
 
-  /** 1. */
+  /** Rows label id. */
   readonly labelId: string;
 
-  /** 1. */
+  /** Handles on row click event. */
   readonly onRowClick: (id: number) => void;
 };
 

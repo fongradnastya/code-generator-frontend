@@ -9,7 +9,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 type Props = {
 
-  /** 1. */
+  /** Number of rows being selected. */
   readonly numSelected: number;
 };
 

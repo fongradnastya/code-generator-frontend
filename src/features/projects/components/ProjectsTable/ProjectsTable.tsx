@@ -44,7 +44,7 @@ const columns: readonly TableColumn<Project>[] = [
 
 type Props = {
 
-  /** Projects info. */
+  /** Projects to be displayed. */
   readonly projects: readonly Project[];
 };
 
@@ -114,7 +114,6 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
             <TableBody>
               {visibleRows.map((row, index) => (
                 <ProjectTableRow
-                  tableColumns={columns}
                   key={index}
                   project={row}
                   isItemSelected={selected.includes(row.id)}
