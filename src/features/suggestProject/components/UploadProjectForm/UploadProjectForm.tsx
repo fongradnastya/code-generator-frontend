@@ -4,33 +4,31 @@ import { TextField, Checkbox, FormControlLabel, Select, MenuItem, Button, InputL
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import styles from './ProjectForm.module.css';
-
 const formData = {
-  projectName: 'My Awesome Project',
-  projectSlug: 'my_awesome_project',
+  project_name: 'My Awesome Project',
+  project_slug: 'my_awesome_project',
   description: 'Behold My Awesome Project!',
-  authorName: 'Daniel Roy Greenfeld',
+  author_name: 'Daniel Roy Greenfeld',
   email: 'daniel@example.com',
-  openSourceLicense: ['MIT', 'BSD', 'GPLv3', 'Apache Software License 2.0', 'Not open source'],
-  usernameType: ['username', 'email'],
+  open_source_license: ['MIT', 'BSD', 'GPLv3', 'Apache Software License 2.0', 'Not open source'],
+  username_type: ['username', 'email'],
   editor: ['None', 'PyCharm', 'VS Code'],
-  cloudProvider: ['AWS', 'GCP', 'Azure', 'None'],
-  ciTool: ['None', 'Travis', 'Gitlab', 'Github', 'Drone'],
+  cloud_provider: ['AWS', 'GCP', 'Azure', 'None'],
+  ci_tool: ['None', 'Travis', 'Gitlab', 'Github', 'Drone'],
   debug: 'n',
 };
 
 const defaultValues = {
-  projectName: formData.projectName,
-  projectSlug: formData.projectSlug,
+  projectName: formData.project_name,
+  projectSlug: formData.project_slug,
   description: formData.description,
-  authorName: formData.authorName,
+  authorName: formData.author_name,
   email: formData.email,
-  openSourceLicense: formData.openSourceLicense[0],
-  usernameType: formData.usernameType[0],
+  openSourceLicense: formData.open_source_license[0],
+  usernameType: formData.username_type[0],
   editor: formData.editor[0],
-  cloudProvider: formData.cloudProvider[0],
-  ciTool: formData.ciTool[0],
+  cloudProvider: formData.cloud_provider[0],
+  ciTool: formData.ci_tool[0],
   debug: formData.debug,
 };
 
@@ -113,7 +111,7 @@ const ProjectFormComponent: FC = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {Object.entries(formData).map(([key, value]) => (
         <div key={key} style={{ marginBottom: '16px' }}>
           {renderField(key, value)}

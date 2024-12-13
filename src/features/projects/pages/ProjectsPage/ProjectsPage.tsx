@@ -56,7 +56,7 @@ export const initialProjects = [
 ];
 
 const ProjectsPageComponent: FC = () => {
-  const [projects, setProjects] = useState(initialProjects);
+  const [projects, _setProjects] = useState(initialProjects);
   const open = useSelector(selectIsDrawerOpen);
   return (
     <main className={`${styles.layout} ${open ? styles.layoutOpen : ''}`}>
