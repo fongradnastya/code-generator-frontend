@@ -4,6 +4,8 @@ import { selectIsDrawerOpen } from 'src/store/drawer/selectors';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
+import { UploadProjectForm } from '../../components/UploadProjectForm';
+
 import styles from './SuggestProjectPage.module.css';
 
 const SuggestProjectPageComponent: FC = () => {
@@ -17,6 +19,7 @@ const SuggestProjectPageComponent: FC = () => {
         >
           Suggest New Project
         </Typography>
+        <UploadProjectForm/>
       </Container>
     </main>
   );

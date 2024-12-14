@@ -1,0 +1,9 @@
+.dialog .dialogTitle {
+  font-weight: var(--title-font-weight);
+}
+
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}

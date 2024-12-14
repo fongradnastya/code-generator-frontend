@@ -1,8 +1,11 @@
 import { memo, type FC } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { TextField, Checkbox, FormControlLabel, Select, MenuItem, Button, InputLabel, FormControl } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { Button } from '@mui/material';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FormInputField } from 'src/components/FormInputField';
+import { FormSelectField } from 'src/components/FormSelectField';
+import { FormCheckbox } from 'src/components/FormCheckbox';
 
 import styles from './ProjectForm.module.css';
 
@@ -43,7 +46,7 @@ const schema = z.object({
 type FormSchema = z.infer<typeof schema>;
 
 const ProjectFormComponent: FC = () => {
-  const { handleSubmit, control, register } = useForm<FormSchema>({
+  const { handleSubmit, register } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     defaultValues,
   });
@@ -56,57 +59,25 @@ const ProjectFormComponent: FC = () => {
   const renderField = (key: string, value: string | string[]) => {
     if (Array.isArray(value)) {
       return (
-        <FormControl fullWidth>
-          <InputLabel id={`${key}-label`}>
-            {key}
-          </InputLabel>
-          <Controller
-            name={key as keyof FormSchema}
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                labelId={`${key}-label`}
-                label={key}
-              >
-                {value.map((option: string) => (
-                  <MenuItem
-                    key={option}
-                    value={option}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </FormControl>
+        <FormSelectField
+          label={key}
+          options={value}
+          registration={register(key as keyof FormSchema)}
+        />
       );
     }
     if (typeof value === 'string' && (value === 'y' || value === 'n')) {
       return (
-        <Controller
-          name={key as keyof FormSchema}
-          control={control}
-          render={({ field }) => (
-            <FormControlLabel
-              control={(
-                <Checkbox
-                  {...field}
-                  checked={field.value === 'y'}
-                  onChange={e => field.onChange(e.target.checked ? 'y' : 'n')}
-                />
-              )}
-              label={key}
-            />
-          )}
+        <FormCheckbox
+          label={key}
+          value={value === 'y'}
+          registration={register(key as keyof FormSchema)}
         />
       );
     }
     return (
-      <TextField
-        {...register(key as keyof FormSchema)}
-        fullWidth
+      <FormInputField
+        registration={register(key as keyof FormSchema)}
         label={key}
       />
     );

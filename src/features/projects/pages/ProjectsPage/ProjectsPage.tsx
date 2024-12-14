@@ -56,7 +56,8 @@ export const initialProjects = [
 ];
 
 const ProjectsPageComponent: FC = () => {
-  const [projects, _setProjects] = useState(initialProjects);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [projects, setProjects] = useState(initialProjects);
   const open = useSelector(selectIsDrawerOpen);
   return (
     <main className={`${styles.layout} ${open ? styles.layoutOpen : ''}`}>
