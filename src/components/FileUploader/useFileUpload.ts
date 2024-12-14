@@ -14,13 +14,8 @@ export const useFileUpload = (
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadFiles = useCallback((files: readonly File[]) => {
-    const csvFiles = files.filter(file => file.type === 'text/csv');
-    if (csvFiles.length !== files.length) {
-      onStatusChange(FileUploadStatus.Reject);
-    } else {
-      onStatusChange(FileUploadStatus.Accept);
-      onFilesChange(csvFiles);
-    }
+    onStatusChange(FileUploadStatus.Accept);
+    onFilesChange(files);
   }, [onStatusChange, onFilesChange]);
 
   const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {

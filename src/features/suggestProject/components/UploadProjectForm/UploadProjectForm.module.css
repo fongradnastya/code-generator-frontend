@@ -3,3 +3,15 @@
   flex-direction: column;
   gap: var(--space-2);
 }
+
+.fileUploadContainer{
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.chipsContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}

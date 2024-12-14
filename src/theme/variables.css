@@ -1,7 +1,13 @@
 :root {
+  /* Size variables */
+  --input-border-radius: 3px;
+  --block-border-radius: 6px;
+  --stroke-width: 1.2px;
+
   /* Space variables */
   --space-base: 4px;
   --space-2: calc(2 * var(--space-base));
+  --space-3: calc(3 * var(--space-base));
   --space-4: calc(4 * var(--space-base));
   --space-5: calc(5 * var(--space-base));
   --space-6: calc(6 * var(--space-base));
@@ -16,7 +22,22 @@
   --anime-list-width: 35%;
 
   /* Colors */
-  --error-color: rgb(192 42 42);
+  --border-color: #ccc;
+  --surface: #fff;
+  --surface-overlay: #ddd;
+  --surface-hover: #eee;
+  --on-surface: #000;
+  --accent: #8c8c8c;
+  --on-accent: #fff;
+  --hatch-color: #464646;
+  --input-focus-color: #2196f3;
+  --error-color: #b71c1c;
+  --surface-opacity-60: rgba(255 255 255 / 60%);
+  --surface-opacity-80: rgba(255 255 255 / 80%);
+  --group-node-color: rgba(0 0 0 / 2%);
+
+  /* Box shadow variables */
+  --input-box-shadow: 0 0 2px rgba(33 150 243 / 40%);
 
   /*
     Material UI v5 doesn't support CSS variables for theming.

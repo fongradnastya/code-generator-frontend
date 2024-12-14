@@ -18,11 +18,20 @@ import styles from './FileUploadDialog.module.css';
 enum FileMessage {
   Success = 'A file was successfully loaded.',
   NoFileError = 'File was not selected.',
-  LoadingError = 'Only CSV files are allowed.',
+  LoadingError = 'Wrong file format.',
   ParsingError = 'An error occurred on file parsing.',
 }
 
 type Props = {
+
+  /** 1. */
+  readonly uploadedFiles: readonly File[];
+
+  /** 1. */
+  readonly onFilesUpload: (files: readonly File[]) => void;
+
+  /** 1. */
+  readonly onFileDelete: (file: File) => void;
 
   /** Is dialog open. */
   readonly isFileDialogOpen: boolean;
@@ -31,8 +40,13 @@ type Props = {
   readonly onFileDialogClose: () => void;
 };
 
-const FileUploadDialogComponent: FC<Props> = ({ isFileDialogOpen, onFileDialogClose }) => {
-  const [files, setFiles] = useState<readonly File[]>([]);
+const FileUploadDialogComponent: FC<Props> = ({
+  isFileDialogOpen,
+  uploadedFiles,
+  onFileDialogClose,
+  onFilesUpload,
+  onFileDelete,
+}) => {
   const [fileUploadStatus, setFileUploadStatus] = useState(FileUploadStatus.Empty);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState<AlertMessage | null>();
@@ -43,16 +57,12 @@ const FileUploadDialogComponent: FC<Props> = ({ isFileDialogOpen, onFileDialogCl
   }, [setIsSnackbarOpen]);
 
   const handleFileSet = useCallback((newFiles: readonly File[]) => {
-    setFiles(newFiles);
-  }, [setFiles]);
+    onFilesUpload(newFiles);
+  }, [onFilesUpload]);
 
   const handleFileUploadStatusSet = useCallback((newStatus: FileUploadStatus) => {
     setFileUploadStatus(newStatus);
   }, [setFileUploadStatus]);
-
-  const handleFileDelete = useCallback((fileToDelete: File) => () => {
-    setFiles(prevFiles => prevFiles.filter(file => file !== fileToDelete));
-  }, [setFiles]);
 
   const displaySnackbarMessage = useCallback((message: FileMessage, severity: MessageSeverity) => {
     setSnackbarMessage({
@@ -63,14 +73,14 @@ const FileUploadDialogComponent: FC<Props> = ({ isFileDialogOpen, onFileDialogCl
   }, [setSnackbarMessage, setIsSnackbarOpen]);
 
   const parseFiles = useCallback(() => {
-    if (files[0] != null) {
+    if (uploadedFiles[0] != null) {
       onFileDialogClose();
-      setFiles([]);
+      onFilesUpload([]);
       setFileUploadStatus(FileUploadStatus.Empty);
     } else {
       displaySnackbarMessage(FileMessage.NoFileError, MessageSeverity.Error);
     }
-  }, [files, displaySnackbarMessage, onFileDialogClose, setFileUploadStatus]);
+  }, [displaySnackbarMessage, onFileDialogClose, onFilesUpload, uploadedFiles]);
 
   useEffect(() => {
     if (fileUploadStatus === FileUploadStatus.Reject) {
@@ -92,7 +102,7 @@ const FileUploadDialogComponent: FC<Props> = ({ isFileDialogOpen, onFileDialogCl
         <DialogTitle
           className={styles.dialogTitle}
         >
-          Upload a csv file
+          Upload project files
         </DialogTitle>
         <DialogContent
           className={styles.dialogContent}
@@ -102,11 +112,11 @@ const FileUploadDialogComponent: FC<Props> = ({ isFileDialogOpen, onFileDialogCl
             onStatusChange={handleFileUploadStatusSet}
           />
           <div>
-            {files.map((file, index) => (
+            {uploadedFiles.map((file, index) => (
               <Chip
                 key={index}
                 label={file.name}
-                onDelete={handleFileDelete(file)}
+                onDelete={onFileDelete(file)}
                 color="primary"
               />
             ))}

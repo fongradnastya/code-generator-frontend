@@ -38,7 +38,6 @@ const FileUploaderComponent: FC<Props> = ({ onStatusChange, onFilesChange }) => 
     >
       <input
         type="file"
-        accept=".csv"
         onChange={handleFileSelect}
         ref={fileInputRef}
         className={styles.input}
