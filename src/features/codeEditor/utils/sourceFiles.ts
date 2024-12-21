@@ -201,13 +201,13 @@ const someHTMLCodeExample = `
 
 type FileType = {
 
-  /** 1. */
+  /** Source file name. */
   readonly name: string;
 
-  /** 1. */
+  /** Source file language. */
   readonly language: string;
 
-  /** 1. */
+  /** Source file content. */
   readonly value: string;
 };
 

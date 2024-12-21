@@ -2,34 +2,38 @@ import { type Project } from 'src/models/project';
 import { Order } from 'src/models/order';
 
 /**
- * 1.
- * @param a 1.
- * @param b 1.
- * @param orderBy 1.
+ * Compares to objects in the descending order.
+ * @param currentElement Current element to compare.
+ * @param nextElement Next element to compare.
+ * @param orderBy A field to compare objects by.
  */
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
+export function descendingComparator<T extends Object>(
+  currentElement: T,
+  nextElement: T,
+  orderBy: keyof T,
+) {
+  if (nextElement[orderBy] < currentElement[orderBy]) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (nextElement[orderBy] > currentElement[orderBy]) {
     return 1;
   }
   return 0;
 }
 
 /**
- * 1.
- * @param order 1.
- * @param orderBy 1.
+ * Gets a project comparator method.
+ * @param order Ascending or descending order.
+ * @param orderBy A field name to order objects by.
  */
 export function getProjectsComparator<Key extends keyof Project>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]: number | string | Date },
-  b: { [key in Key]: number | string | Date },
+  firstElement: { [key in Key]: number | string | Date },
+  secondElement: { [key in Key]: number | string | Date },
 ) => number {
   return order === Order.Descending ?
-    (a, b) => descendingComparator(a, b, orderBy) :
-    (a, b) => -descendingComparator(a, b, orderBy);
+    (firstElement, secondElement) => descendingComparator(firstElement, secondElement, orderBy) :
+    (firstElement, secondElement) => -descendingComparator(firstElement, secondElement, orderBy);
 }

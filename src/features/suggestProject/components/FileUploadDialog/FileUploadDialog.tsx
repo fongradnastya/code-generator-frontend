@@ -24,13 +24,13 @@ enum FileMessage {
 
 type Props = {
 
-  /** 1. */
+  /** An array of uploaded files. */
   readonly uploadedFiles: readonly File[];
 
-  /** 1. */
+  /** Handles file uploading. */
   readonly onFilesUpload: (files: readonly File[]) => void;
 
-  /** 1. */
+  /** Handles file deletion. */
   readonly onFileDelete: (file: File) => void;
 
   /** Is dialog open. */

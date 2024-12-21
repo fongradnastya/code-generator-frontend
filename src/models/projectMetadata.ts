@@ -1,20 +1,20 @@
 import { type ProjectType } from './projectType';
 
-/** 1. */
+/** Saved project meta data. */
 export type ProjectMetadata = {
 
-  /** 1. */
+  /** Project id. */
   readonly id: number;
 
-  /** 1. */
+  /** Project name. */
   readonly projectName: string;
 
-  /** 1. */
+  /** Project description. */
   readonly projectDescription: string;
 
-  /** 1. */
+  /** Project type. */
   readonly projectType: ProjectType;
 
-  /** 1. */
-  readonly projectFiles: File;
+  /** Project files. */
+  readonly projectFiles: readonly File[];
 };

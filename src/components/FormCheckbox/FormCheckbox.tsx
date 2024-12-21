@@ -4,10 +4,10 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 
 type Props = {
 
-  /** The label for the input field. */
+  /** The label for the checkbox. */
   readonly label: string;
 
-  /** 1. */
+  /** Checkbox value. */
   readonly value: boolean;
 
   /** The form registration for react-hook-form. */
