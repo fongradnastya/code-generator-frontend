@@ -3,7 +3,7 @@ import { type SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type ServerError } from 'src/models/serverError';
 import { type UserRegistration } from 'src/models/userRegistration';
-import { HandleErrorsService } from 'src/api/services/handleErrorsService';
+import { HandleErrorsService } from 'src/api/services/handleErrorService';
 import { z } from 'zod';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';

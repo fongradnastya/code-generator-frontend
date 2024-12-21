@@ -116,7 +116,7 @@ const FileUploadDialogComponent: FC<Props> = ({
               <Chip
                 key={index}
                 label={file.name}
-                onDelete={onFileDelete(file)}
+                onDelete={() => onFileDelete(file)}
                 color="primary"
               />
             ))}
