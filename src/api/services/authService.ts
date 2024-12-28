@@ -1,5 +1,5 @@
 import { type UserSecret } from 'src/models/userSecret';
-import { type Login } from 'src/models/loginValues';
+import { type Login } from 'src/models/login';
 import { type Registration } from 'src/models/registration';
 
 import { isApiError } from 'src/utils/axiosErrorGuard';
@@ -14,7 +14,7 @@ import { RegistrationMapper } from '../mappers/registrationMapper';
 import { UserSecretStorageService } from './userSecretStorage';
 
 /** Auth API. */
-export namespace AuthApi {
+export namespace AuthService {
 
   const loginUrl = 'login/';
   const registerUrl = 'register/';

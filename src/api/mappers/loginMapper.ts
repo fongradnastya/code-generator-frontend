@@ -1,6 +1,6 @@
 import { extractErrorMessage } from 'src/utils/extractErrorMessage';
 import { type EntityValidationErrors } from 'src/models/appError';
-import { type Login } from 'src/models/loginValues';
+import { type Login } from 'src/models/login';
 
 import { type LoginDto } from '../dtos/loginDto';
 import { type ValidationErrorDto } from '../dtos/validationErrorDto';

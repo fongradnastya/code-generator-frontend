@@ -3,7 +3,7 @@ import axios, { type AxiosError, type AxiosInstance } from 'axios';
 import { CONFIG } from './config';
 import { addSecretBeforeRequest } from './interceptors/addSecretBeforeRequest';
 import { type SecretRefreshResult, refreshSecret } from './interceptors/refreshSecret';
-import { AuthApi } from './services/authApi';
+import { AuthService } from './services/authService';
 import { UserSecretStorageService } from './services/userSecretStorage';
 
 /** Instance of http Axios. */
@@ -41,7 +41,7 @@ const handleSecretRefresh = async(error: AxiosError): SecretRefreshResult => {
   }
 
   try {
-    const newSecret = await AuthApi.refreshSecret(secret);
+    const newSecret = await AuthService.refreshSecret(secret);
     await UserSecretStorageService.save(newSecret);
     return http.request(error.config);
   } catch (err: unknown) {
