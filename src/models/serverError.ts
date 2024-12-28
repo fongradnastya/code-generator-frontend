@@ -5,5 +5,5 @@ export type ServerError = {
   readonly controlName: string;
 
   /** An array of controls error messages. */
-  readonly controlErrors: readonly string[];
+  readonly controlErrors: string[];
 };
