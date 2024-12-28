@@ -2,7 +2,7 @@ import { memo, type FC, useEffect } from 'react';
 import { type SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type ServerError } from 'src/models/serverError';
-import { type UserRegistration } from 'src/models/userRegistration';
+import { type Registration } from 'src/models/registration';
 import { HandleErrorsService } from 'src/api/services/handleErrorService';
 import { z } from 'zod';
 import Button from '@mui/material/Button';
@@ -38,7 +38,7 @@ const validationSchema = z.object({
   path: ['passwordConfirm'],
 });
 
-const defaultRegistrationFormValues: UserRegistration = {
+const defaultRegistrationFormValues: Registration = {
   email: '',
   firstName: '',
   lastName: '',
@@ -49,7 +49,7 @@ const defaultRegistrationFormValues: UserRegistration = {
 type Props = {
 
   /** Handles user registration on form submit. */
-  onSubmit: SubmitHandler<UserRegistration>;
+  onSubmit: SubmitHandler<Registration>;
 
   /** An array of server errors. */
   serverErrors: readonly ServerError[];

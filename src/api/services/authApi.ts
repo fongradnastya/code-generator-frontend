@@ -1,35 +1,37 @@
-import { type AxiosError, AxiosHeaders, type AxiosResponse } from 'axios';
 import { type UserSecret } from 'src/models/userSecret';
 import { type Login } from 'src/models/loginValues';
+import { type Registration } from 'src/models/registration';
 
 import { isApiError } from 'src/utils/axiosErrorGuard';
 
-import { type LoginDto } from '../dtos/loginDto';
-import { type ApiErrorDto } from '../dtos/validationErrorDto';
 import { http } from '../http';
 import { type UserSecretDto } from '../dtos/userSecretDto';
 import { userSecretMapper } from '../mappers/userSecretMapper';
-
 import { AppErrorMapper } from '../mappers/appErrorMapper';
-
 import { loginMapper } from '../mappers/loginMapper';
+import { RegistrationMapper } from '../mappers/registrationMapper';
 
 import { UserSecretStorageService } from './userSecretStorage';
 
 /** Auth API. */
 export namespace AuthApi {
 
-  const loginUrl = 'auth/login/';
-  const refreshSecretUrl = 'auth/token/refresh/';
+  const loginUrl = 'login/';
+  const registerUrl = 'register/';
+  const refreshSecretUrl = 'token/refresh/';
 
   /**
    * Logs a user in with email and password.
    * @param loginData Login data.
    */
-  export async function login({ email, password }: Login): Promise<UserSecret> {
+  export async function login(loginData: Login): Promise<UserSecret> {
     try {
-      const { data: userSecretDto } = await mockLogin(email, password);
+      const loginDto = loginMapper.toDto(loginData);
+      const { data: userSecretDto } = await http.post<UserSecretDto>(loginUrl, loginDto);
+
       const userSecret = userSecretMapper.fromDto(userSecretDto);
+
+      await UserSecretStorageService.save(userSecret);
 
       return userSecret;
     } catch (error: unknown) {
@@ -41,7 +43,26 @@ export namespace AuthApi {
     }
   }
 
-  /** Logs the current user out. */
+  /**
+   * Registers a new user with email and password.
+   * @param registrationData Registration data.
+   */
+  export async function register(registrationData: Registration): Promise<void> {
+    const registrationDto = RegistrationMapper.toDto(registrationData);
+    try {
+      await http.post(registerUrl, registrationDto);
+    } catch (error: unknown) {
+      if (isApiError(error)) {
+        const appError = AppErrorMapper.fromDtoWithValidationSupport(error, loginMapper);
+        throw appError;
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Logs the current user out.
+   */
   export async function logout(): Promise<void> {
     await UserSecretStorageService.remove();
   }
@@ -51,68 +72,23 @@ export namespace AuthApi {
    * @param secret User secret.
    */
   export async function refreshSecret(secret: UserSecret): Promise<UserSecret> {
-    const { data: newSecretDto } = await http.post<UserSecretDto>(
-      refreshSecretUrl,
-      userSecretMapper.toDto(secret),
-    );
-
-    return userSecretMapper.fromDto(newSecretDto);
-  }
-
-  // TODO (template preparation): This function was made for template. Remove it from your project.
-  /**
-   * Mocks user login.
-   * @param email Email.
-   * @param password Password.
-   */
-  async function mockLogin(email: string, password: string): Promise<AxiosResponse<UserSecretDto>> {
     try {
-      return await http.post(loginUrl, {
-        email, password,
-      });
+      const { data: newSecretDto } = await http.post<UserSecretDto>(
+        refreshSecretUrl,
+        userSecretMapper.toDto(secret),
+      );
+
+      const newSecret = userSecretMapper.fromDto(newSecretDto);
+
+      await UserSecretStorageService.save(newSecret);
+
+      return newSecret;
     } catch (error: unknown) {
-      const axiosMockError = error as AxiosError<ApiErrorDto<LoginDto>>;
-      if (!email) {
-        axiosMockError.message = 'No login provided';
-        throw axiosMockError;
+      if (isApiError(error)) {
+        const appError = AppErrorMapper.fromDto(error);
+        throw appError;
       }
-
-      if (!password || password.length < 5) {
-        axiosMockError.message = 'Incorrect password';
-
-        axiosMockError.response = {
-          config: {
-            headers: new AxiosHeaders({
-              Authorization: 'Bearer fake_token',
-            }),
-          },
-          data: {
-            data: {
-              password: ['Minimum password length 5 characters'],
-            },
-            detail: 'Incorrect password',
-          },
-          headers: new AxiosHeaders(),
-          status: 400,
-          statusText: 'Validation error.',
-        };
-
-        throw axiosMockError;
-      }
-
-      const axiosMockResponse: AxiosResponse<UserSecretDto> = {
-        headers: new AxiosHeaders(),
-        config: {
-          headers: new AxiosHeaders(),
-        },
-        data: {
-          token: crypto.randomUUID() as string,
-        },
-        status: 200,
-        statusText: 'OK',
-      };
-
-      return axiosMockResponse;
+      throw error;
     }
   }
 }

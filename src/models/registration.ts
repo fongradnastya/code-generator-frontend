@@ -1,5 +1,5 @@
 /** User registration model. */
-export type UserRegistration = {
+export type Registration = {
 
   /** User's email. */
   readonly email: string;
