@@ -17,7 +17,7 @@ import { UserSecretStorageService } from './userSecretStorage';
 export namespace AuthService {
 
   const loginUrl = 'login/';
-  const registerUrl = 'register/';
+  const registerUrl = 'create_user/';
   const refreshSecretUrl = 'token/refresh/';
 
   /**

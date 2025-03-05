@@ -1,7 +1,3 @@
-// See appError.ts to find out why this rule is disabled.
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO (template preparation): Check and update ValidationErrorDto and ApiErrorDto according to API specs.
-
 /**
  * Validation error DTO.
  * If a property has primitive type (number, string), then errors - is an array of strings.
@@ -10,7 +6,7 @@
  * If a property is an array, then errors is an object where key is name of property
  * and value is array of errors (index in this array corresponds to index of item in the original array).
  */
-export type ValidationErrorDto<T extends Record<string, any>> = {
+export type ValidationErrorDto<T extends Record<string, unknown>> = {
   [P in keyof T]?: T[P] extends readonly (infer K extends Record<string, unknown>)[]
     ? ValidationErrorDto<K>[]
     : T[P] extends Record<string, unknown>
@@ -24,7 +20,7 @@ export type ValidationErrorDto<T extends Record<string, any>> = {
 };
 
 /** Returned error with api. */
-export type ApiErrorDto<TDto extends Record<string, any>> = {
+export type ApiErrorDto<TDto extends Record<string, unknown>> = {
 
   /** Validation data. May not be present in case the error is not related to provided data. */
   readonly data?: ValidationErrorDto<TDto>;
