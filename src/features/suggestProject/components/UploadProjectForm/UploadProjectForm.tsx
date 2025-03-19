@@ -3,6 +3,7 @@ import { type ProjectMetadata } from 'src/models/projectMetadata';
 import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import { ProjectType } from 'src/models/projectType';
+import { ProjectStatus } from 'src/models/projectStatus';
 import { FormInputField } from 'src/components/FormInputField';
 import { FormSelectField } from 'src/components/FormSelectField';
 import Chip from '@mui/material/Chip';
@@ -15,7 +16,8 @@ const defaultValues = {
   projectName: '',
   projectDescription: '',
   projectFiles: undefined,
-  ProjectType: ProjectType.Django,
+  projectType: ProjectType.Django,
+  projectStatus: ProjectStatus.Draft,
 };
 
 const UploadProjectFormComponent: FC = () => {
@@ -79,7 +81,12 @@ const UploadProjectFormComponent: FC = () => {
           options={Object.values(ProjectType)}
           registration={register('projectType')}
           error={errors.projectType}
-
+        />
+        <FormSelectField
+          label="Project Status"
+          options={Object.values(ProjectStatus)}
+          registration={register('projectStatus')}
+          error={errors.projectStatus}
         />
         <div className={styles.fileUploadContainer}>
           <Button

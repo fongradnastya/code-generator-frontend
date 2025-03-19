@@ -1,4 +1,5 @@
 import { type ProjectType } from './projectType';
+import { type ProjectStatus } from './projectStatus';
 
 /** Saved project meta data. */
 export type ProjectMetadata = {
@@ -14,6 +15,9 @@ export type ProjectMetadata = {
 
   /** Project type. */
   readonly projectType: ProjectType;
+
+  /** 1. */
+  readonly projectStatus: ProjectStatus;
 
   /** Project files. */
   readonly projectFiles: readonly File[];
