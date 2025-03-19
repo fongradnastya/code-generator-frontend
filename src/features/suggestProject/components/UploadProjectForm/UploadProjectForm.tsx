@@ -1,5 +1,5 @@
 import { memo, type FC, useState, useCallback } from 'react';
-import { type ProjectMetadata } from 'src/models/projectMetadata';
+import { type ProjectUpload } from 'src/models/projectUpload';
 import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import { ProjectType } from 'src/models/projectType';
@@ -43,7 +43,7 @@ const UploadProjectFormComponent: FC = () => {
     setUploadedFiles(uploadedFiles.filter(file => file !== fileToDelete));
   }, [uploadedFiles]);
 
-  const { register, formState: { errors } } = useForm<ProjectMetadata>({
+  const { register, formState: { errors } } = useForm<ProjectUpload>({
     defaultValues,
   });
 

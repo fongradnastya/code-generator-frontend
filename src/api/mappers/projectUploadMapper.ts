@@ -1,6 +1,6 @@
 import { type ProjectUpload } from 'src/models/projectUpload';
 
-import { type ProjectUploadDto } from '../dtos/progectUploadDto';
+import { type ProjectUploadDto } from '../dtos/projectUploadDto';
 
 import { projectTypeMapper } from './projectTypeMapper';
 import { projectStatusMapper } from './projectStatusMapper';

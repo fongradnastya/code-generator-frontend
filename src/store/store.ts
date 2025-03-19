@@ -3,12 +3,14 @@ import { type TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux
 
 import { drawerSlice } from './drawer/slice';
 import { authorizationSlice } from './authorization/slice';
+import { projectsSlice } from './projects/slice';
 
 /** The Redux store of the application. */
 export const store = configureStore({
   reducer: {
     drawer: drawerSlice.reducer,
     authorization: authorizationSlice.reducer,
+    projects: projectsSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     serializableCheck: false,
