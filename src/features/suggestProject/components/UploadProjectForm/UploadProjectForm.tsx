@@ -1,18 +1,47 @@
-import { memo, type FC, useState, useCallback } from 'react';
-import { type ProjectUpload } from 'src/models/projectUpload';
-import { useForm } from 'react-hook-form';
+import { memo, type FC, useState, useCallback, useEffect } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@mui/material';
 import { ProjectType } from 'src/models/projectType';
 import { ProjectStatus } from 'src/models/projectStatus';
 import { FormInputField } from 'src/components/FormInputField';
 import { FormSelectField } from 'src/components/FormSelectField';
+import { type ServerError } from 'src/models/serverError';
+import { HandleErrorsService } from 'src/api/services/handleErrorService';
+import { z } from 'zod';
 import Chip from '@mui/material/Chip';
 
 import { FileUploadDialog } from '../FileUploadDialog';
 
 import styles from './UploadProjectForm.module.css';
 
-const defaultValues = {
+const validationSchema = z.object({
+  projectName: z
+    .string()
+    .min(1, { message: 'Project name is required' }),
+  projectDescription: z
+    .string()
+    .max(150, { message: 'Project description is too long' }),
+  projectType: z.nativeEnum(ProjectType),
+  projectStatus: z.nativeEnum(ProjectStatus),
+  projectFiles: z
+    .instanceof(File, { message: 'Please upload a valid file' })
+    .optional()
+    .refine(file => file instanceof File && file.size > 0, { message: 'File cannot be empty' }),
+});
+
+type ProjectUploadFormValues = z.infer<typeof validationSchema>;
+
+type Props = {
+
+  /** Handles user login on form submit. */
+  onSubmit: SubmitHandler<ProjectUploadFormValues>;
+
+  /** An array of error received from the server. */
+  serverErrors: readonly ServerError[];
+};
+
+const defaultValues: ProjectUploadFormValues = {
   projectName: '',
   projectDescription: '',
   projectFiles: undefined,
@@ -20,9 +49,21 @@ const defaultValues = {
   projectStatus: ProjectStatus.Draft,
 };
 
-const UploadProjectFormComponent: FC = () => {
+const UploadProjectFormComponent: FC<Props> = ({
+  onSubmit,
+  serverErrors,
+}) => {
   const [isFileDialogOpen, setIsFileDialogOpen] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<readonly File[]>([]);
+
+  const { handleSubmit, formState: { errors }, register, setError } = useForm({
+    defaultValues,
+    resolver: zodResolver(validationSchema),
+  });
+
+  useEffect(() => {
+    HandleErrorsService.setErrors(serverErrors, setError, defaultValues);
+  }, [serverErrors, setError]);
 
   const handleFileDialogClose = useCallback(
     () => setIsFileDialogOpen(false),
@@ -43,13 +84,12 @@ const UploadProjectFormComponent: FC = () => {
     setUploadedFiles(uploadedFiles.filter(file => file !== fileToDelete));
   }, [uploadedFiles]);
 
-  const { register, formState: { errors } } = useForm<ProjectUpload>({
-    defaultValues,
-  });
-
   return (
     <>
-      <form className={styles.form}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.form}
+      >
         <FormInputField
           label="Project Name"
           registration={

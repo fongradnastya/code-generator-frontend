@@ -17,5 +17,5 @@ export type ProjectUpload = {
   readonly projectStatus: ProjectStatus;
 
   /** 1. */
-  readonly projectFiles: File;
+  readonly projectFiles?: File;
 };

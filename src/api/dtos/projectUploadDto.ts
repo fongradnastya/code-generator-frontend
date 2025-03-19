@@ -17,5 +17,5 @@ export type ProjectUploadDto = {
   readonly status: ProjectStatusDto;
 
   /** 1. */
-  readonly file: File;
+  readonly file?: File;
 };
