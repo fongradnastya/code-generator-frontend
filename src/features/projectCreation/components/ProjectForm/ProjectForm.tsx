@@ -4,7 +4,6 @@ import { Button } from '@mui/material';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInputField } from 'src/components/FormInputField';
-import { FormSelectField } from 'src/components/FormSelectField';
 import { FormCheckbox } from 'src/components/FormCheckbox';
 
 import styles from './ProjectForm.module.css';
@@ -57,15 +56,6 @@ const ProjectFormComponent: FC = () => {
   };
 
   const renderField = (key: string, value: string | string[]) => {
-    if (Array.isArray(value)) {
-      return (
-        <FormSelectField
-          label={key}
-          options={value}
-          registration={register(key as keyof FormSchema)}
-        />
-      );
-    }
     if (typeof value === 'string' && (value === 'y' || value === 'n')) {
       return (
         <FormCheckbox

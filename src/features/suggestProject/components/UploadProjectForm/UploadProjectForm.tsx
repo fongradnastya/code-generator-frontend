@@ -56,7 +56,7 @@ const UploadProjectFormComponent: FC<Props> = ({
   const [isFileDialogOpen, setIsFileDialogOpen] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<readonly File[]>([]);
 
-  const { handleSubmit, formState: { errors }, register, setError } = useForm({
+  const { handleSubmit, formState: { errors }, register, setError, setValue, control } = useForm({
     defaultValues,
     resolver: zodResolver(validationSchema),
   });
@@ -76,13 +76,22 @@ const UploadProjectFormComponent: FC<Props> = ({
   );
 
   const handleFilesUpload = useCallback(
-    (files: readonly File[]) => setUploadedFiles(uploadedFiles?.concat(files)),
-    [uploadedFiles],
+    (files: readonly File[]) => {
+      const newFiles = uploadedFiles.concat(files);
+      setUploadedFiles(newFiles);
+      setValue('projectFiles', newFiles[0], { shouldValidate: true });
+    },
+    [uploadedFiles, setValue],
   );
 
-  const handleFileDelete = useCallback((fileToDelete: File) => () => {
-    setUploadedFiles(uploadedFiles.filter(file => file !== fileToDelete));
-  }, [uploadedFiles]);
+  const handleFileDelete = useCallback(
+    (fileToDelete: File) => () => {
+      const filteredFiles = uploadedFiles.filter(file => file !== fileToDelete);
+      setUploadedFiles(filteredFiles);
+      setValue('projectFiles', undefined, { shouldValidate: true });
+    },
+    [uploadedFiles, setValue],
+  );
 
   return (
     <>
@@ -119,14 +128,14 @@ const UploadProjectFormComponent: FC<Props> = ({
         <FormSelectField
           label="Project Type"
           options={Object.values(ProjectType)}
-          registration={register('projectType')}
-          error={errors.projectType}
+          control={control}
+          name="projectType"
         />
         <FormSelectField
           label="Project Status"
           options={Object.values(ProjectStatus)}
-          registration={register('projectStatus')}
-          error={errors.projectStatus}
+          control={control}
+          name="projectStatus"
         />
         <div className={styles.fileUploadContainer}>
           <Button
