@@ -19,7 +19,7 @@ export function shouldInterceptSecret(config: InternalAxiosRequestConfig): boole
  * @param secret User secret.
  */
 function getAuthorizationHeaderValue(secret: string): string {
-  return `Bearer ${secret}`;
+  return `Token ${secret}`;
 }
 
 /**
