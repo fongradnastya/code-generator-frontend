@@ -17,7 +17,11 @@ export namespace ProjectService {
    */
   export async function uploadProjectForm(project: ProjectUpload): Promise<UploadResult> {
     const projectUploadDto = projectUploadMapper.toDto(project);
-    const { data: uploadResultDto } = await http.post<UploadResultDto>(uploadUrl, projectUploadDto);
+    const { data: uploadResultDto } = await http.post<UploadResultDto>(uploadUrl, projectUploadDto, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return uploadResultMapper.fromDto(uploadResultDto);
   }
 }
