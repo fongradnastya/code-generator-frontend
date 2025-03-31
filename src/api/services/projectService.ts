@@ -18,6 +18,37 @@ export namespace ProjectService {
 
   const projectsUrl = 'user_projects/';
 
+  const downloadUrl = (projectId: string) => `download/${projectId}/`;
+
+  /**
+   * 1.
+   * @param projectId 1.
+   * @param fileName 1.
+   */
+  export async function downloadProject(projectId: string, fileName: string): Promise<void> {
+    try {
+      const { data } = await http.get<Blob>(downloadUrl(projectId), {
+        responseType: 'blob',
+      });
+
+      // Create a temporary URL for the file
+      const fileURL = window.URL.createObjectURL(new Blob([data]));
+
+      // Use an anchor tag but don't append it to the DOM
+      const link = document.createElement('a');
+      link.href = fileURL;
+      link.download = fileName;
+
+      // Trigger the download by simulating a click
+      link.click();
+
+      // Cleanup
+      window.URL.revokeObjectURL(fileURL);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
+  }
+
   /**
    * 1.
    * @param project 1.
