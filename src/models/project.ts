@@ -5,20 +5,23 @@ import { type ProjectStatus } from './projectStatus';
 export type Project = {
 
   /** Project id. */
-  readonly id: number;
+  readonly projectId: string;
 
   /** Project name. */
   readonly projectName: string;
 
+  /** 1. */
+  readonly description: string;
+
   /** Project creation date. */
   readonly creationDate: Date;
-
-  /** Project language. */
-  readonly projectLanguage: string;
 
   /** Project type. */
   readonly projectType: ProjectType;
 
   /** Project status. */
-  readonly status: ProjectStatus;
+  readonly projectStatus: ProjectStatus;
+
+  /** 1. */
+  readonly fileName: string;
 };

@@ -29,15 +29,11 @@ const columns: readonly TableColumn<Project>[] = [
     label: 'Creation Date',
   },
   {
-    accessor: 'projectLanguage',
-    label: 'Language',
-  },
-  {
     accessor: 'projectType',
     label: 'Type',
   },
   {
-    accessor: 'status',
+    accessor: 'projectStatus',
     label: 'Status',
   },
 ];
@@ -52,7 +48,7 @@ const PAGE_SIZE_OPTIONS = [5, 10, 25];
 
 const ProjectTableComponent: FC<Props> = ({ projects }) => {
   const [order, setOrder] = useState(Order.Ascending);
-  const [orderBy, setOrderBy] = useState<keyof Project>('id');
+  const [orderBy, setOrderBy] = useState<keyof Project>('projectId');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE_OPTIONS[0]);
   const {
@@ -116,7 +112,7 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
                 <ProjectTableRow
                   key={index}
                   project={row}
-                  isItemSelected={selected.includes(row.id)}
+                  isItemSelected={selected.includes(row.projectId)}
                   labelId={`table-checkbox-${index}`}
                   onRowClick={handleRowClick}
                 />

@@ -13,7 +13,6 @@ export const http: AxiosInstance = axios.create({
 
 const getSecret = async(): Promise<string | null> => {
   const secret = await UserSecretStorageService.get();
-  console.log(secret?.token);
   return secret?.token ?? null;
 };
 

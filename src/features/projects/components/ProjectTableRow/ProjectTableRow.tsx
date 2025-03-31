@@ -18,7 +18,7 @@ type Props = {
   readonly labelId: string;
 
   /** Handles on row click event. */
-  readonly onRowClick: (id: number) => void;
+  readonly onRowClick: (id: string) => void;
 };
 
 const ProjectTableRowComponent: FC<Props> = ({
@@ -29,11 +29,11 @@ const ProjectTableRowComponent: FC<Props> = ({
 }) => (
   <TableRow
     hover
-    onClick={() => onRowClick(project.id)}
+    onClick={() => onRowClick(project.projectId)}
     role="checkbox"
     aria-checked={isItemSelected}
     tabIndex={-1}
-    key={project.id}
+    key={project.projectId}
     selected={isItemSelected}
     className={styles.tableRow}
   >
@@ -53,13 +53,10 @@ const ProjectTableRowComponent: FC<Props> = ({
       {project.creationDate.toISOString()}
     </TableCell>
     <TableCell align="left">
-      {project.projectLanguage}
-    </TableCell>
-    <TableCell align="left">
       {project.projectType}
     </TableCell>
     <TableCell align="left">
-      {project.status}
+      {project.projectStatus}
     </TableCell>
   </TableRow>
 );

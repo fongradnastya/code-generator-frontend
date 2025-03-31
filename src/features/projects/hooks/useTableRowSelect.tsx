@@ -6,20 +6,20 @@ import { type Project } from 'src/models/project';
  * @param projects Projects to be selected.
  */
 export const useTableRowSelect = (projects: readonly Project[]) => {
-  const [selected, setSelected] = useState<readonly number[]>([]);
+  const [selected, setSelected] = useState<readonly string[]>([]);
 
   const handleSelectAllClick = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = projects.map(n => n.id);
+      const newSelected = projects.map(n => n.projectId);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   }, [projects]);
 
-  const handleRowClick = useCallback((id: number) => {
+  const handleRowClick = useCallback((id: string) => {
     const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+    let newSelected: readonly string[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
