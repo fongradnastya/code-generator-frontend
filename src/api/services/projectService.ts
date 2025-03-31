@@ -38,7 +38,9 @@ export namespace ProjectService {
    */
   export async function getUserProjects(userProfile: UserProfile): Promise<readonly Project[]> {
     const userProfileDto = UserProfileMapper.toDto(userProfile);
-    const { data: projectsDto } = await http.post<readonly ProjectDto[]>(projectsUrl, userProfileDto);
+    const queryParams = new URLSearchParams(userProfileDto as Record<string, string>).toString();
+    const requestUrl = `${projectsUrl}?${queryParams}`;
+    const { data: projectsDto } = await http.get<readonly ProjectDto[]>(requestUrl);
     return projectsDto.map(projectDto => projectMapper.fromDto(projectDto));
   }
 }

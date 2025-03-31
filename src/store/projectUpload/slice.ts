@@ -5,9 +5,9 @@ import { uploadProject } from './dispatchers';
 import { initialState } from './state';
 
 /** 1. */
-export const projectsSlice = createSlice(
+export const projectUploadSlice = createSlice(
   {
-    name: 'projects',
+    name: 'projectUpload',
     initialState,
     reducers: {
       clearErrors(state) {

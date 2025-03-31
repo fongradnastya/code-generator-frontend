@@ -2,7 +2,7 @@ import { type UploadResult } from 'src/models/uploadResult';
 import { type ServerError } from 'src/models/serverError';
 
 /** 1. */
-export type ProjectState = {
+export type ProjectUploadState = {
 
   /** 1. */
   readonly uploadResult?: UploadResult;
@@ -15,6 +15,6 @@ export type ProjectState = {
 };
 
 /** 1. */
-export const initialState: ProjectState = {
+export const initialState: ProjectUploadState = {
   isLoading: false,
 };

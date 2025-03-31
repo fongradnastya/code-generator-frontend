@@ -3,11 +3,11 @@ import { type SubmitHandler } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from 'src/store';
 import { selectIsDrawerOpen } from 'src/store/drawer/selectors';
 import { useNavigate } from 'react-router-dom';
-import { selectProjectLoading, selectUploadError } from 'src/store/projects/selectors';
+import { selectProjectLoading, selectUploadError } from 'src/store/projectUpload/selectors';
 import { clearErrors } from 'src/store/authorization/slice';
 import Typography from '@mui/material/Typography';
 import { type ProjectUpload } from 'src/models/projectUpload';
-import { uploadProject } from 'src/store/projects/dispatchers';
+import { uploadProject } from 'src/store/projectUpload/dispatchers';
 import { Loader } from 'src/components/Loader';
 import Container from '@mui/material/Container';
 
