@@ -17,12 +17,14 @@ export const authorizationSlice = createSlice({
     .addCase(loginUser.pending, state => {
       state.isLoading = true;
     })
-    .addCase(loginUser.fulfilled, (state, _action) => {
+    .addCase(loginUser.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.email = action.meta.arg.email;
     })
     .addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
       state.error = isServerErrorArray(action.payload) ? action.payload : [];
+      state.email = null;
     })
     .addCase(registerUser.pending, state => {
       state.isLoading = true;

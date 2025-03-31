@@ -13,3 +13,9 @@ export const selectAuthorizationLoading = createSelector(
   (state: RootState) => state.authorization.isLoading,
   isLoading => isLoading,
 );
+
+/** 1. */
+export const selectUserEmail = createSelector(
+  (state: RootState) => state.authorization.email,
+  email => email,
+);
