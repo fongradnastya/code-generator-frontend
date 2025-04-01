@@ -14,7 +14,7 @@ export type ProjectDto = {
   readonly project_type: ProjectTypeDto;
 
   /** 1. */
-  readonly project_status: ProjectStatusDto;
+  readonly status: ProjectStatusDto;
 
   /** 1. */
   readonly file_name: string;

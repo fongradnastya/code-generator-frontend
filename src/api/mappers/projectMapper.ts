@@ -14,7 +14,7 @@ class ProjectMapper implements IMapper<ProjectDto, Project> {
     return {
       projectName: dto.project_name,
       description: dto.description,
-      projectStatus: projectStatusMapper.fromDto(dto.project_status),
+      projectStatus: projectStatusMapper.fromDto(dto.status),
       projectType: projectTypeMapper.fromDto(dto.project_type),
       projectId: dto.file_id,
       fileName: dto.file_name,
@@ -28,7 +28,7 @@ class ProjectMapper implements IMapper<ProjectDto, Project> {
       project_name: data.projectName,
       description: data.description,
       project_type: projectTypeMapper.toDto(data.projectType),
-      project_status: projectStatusMapper.toDto(data.projectStatus),
+      status: projectStatusMapper.toDto(data.projectStatus),
       file_id: data.projectId,
       file_name: data.fileName,
       created_at: data.creationDate.toUTCString(),
