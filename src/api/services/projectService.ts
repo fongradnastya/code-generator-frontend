@@ -14,9 +14,9 @@ import { http } from '../http';
 
 export namespace ProjectService {
 
-  const uploadUrl = 'upload/';
+  const uploadUrl = 'upload-template/';
 
-  const projectsUrl = 'user_projects/';
+  const projectsUrl = 'user-projects/';
 
   const downloadUrl = (projectId: string) => `download/${projectId}/`;
 

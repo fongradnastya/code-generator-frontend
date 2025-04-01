@@ -17,8 +17,7 @@ import { UserSecretStorageService } from './userSecretStorage';
 export namespace AuthService {
 
   const loginUrl = 'login/';
-  const registerUrl = 'create_user/';
-  const refreshSecretUrl = 'token/refresh/';
+  const registerUrl = 'create-user/';
 
   /**
    * Logs a user in with email and password.
@@ -48,6 +47,7 @@ export namespace AuthService {
    * @param registrationData Registration data.
    */
   export async function register(registrationData: Registration): Promise<void> {
+    logout();
     const registrationDto = RegistrationMapper.toDto(registrationData);
     try {
       await http.post(registerUrl, registrationDto);
@@ -65,30 +65,5 @@ export namespace AuthService {
    */
   export async function logout(): Promise<void> {
     await UserSecretStorageService.remove();
-  }
-
-  /**
-   * Refresh secret.
-   * @param secret User secret.
-   */
-  export async function refreshSecret(secret: UserSecret): Promise<UserSecret> {
-    try {
-      const { data: newSecretDto } = await http.post<UserSecretDto>(
-        refreshSecretUrl,
-        userSecretMapper.toDto(secret),
-      );
-
-      const newSecret = userSecretMapper.fromDto(newSecretDto);
-
-      await UserSecretStorageService.save(newSecret);
-
-      return newSecret;
-    } catch (error: unknown) {
-      if (isApiError(error)) {
-        const appError = AppErrorMapper.fromDto(error);
-        throw appError;
-      }
-      throw error;
-    }
   }
 }
