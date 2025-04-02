@@ -12,7 +12,7 @@ class UploadResultMapper implements IMapper<UploadResultDto, UploadResult> {
     return {
       fileId: dto.file_id,
       fileName: dto.file_name,
-      projectId: dto.project_id,
+      templateId: dto.template_id,
     };
   }
 
@@ -21,7 +21,7 @@ class UploadResultMapper implements IMapper<UploadResultDto, UploadResult> {
     return {
       file_id: data.fileId,
       file_name: data.fileName,
-      project_id: data.projectId,
+      template_id: data.templateId,
     };
   }
 }

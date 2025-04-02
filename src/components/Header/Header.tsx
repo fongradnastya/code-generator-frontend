@@ -21,9 +21,9 @@ import styles from './Header.module.css';
 const DRAWER_WIDTH = 280;
 
 const mainRoutes: NavigationProps[] = [
-  { name: 'My Projects', path: '/projects' },
-  { name: 'New Project', path: '/project' },
-  { name: 'Suggest Project', path: '/suggest' },
+  { name: 'My Templates', path: '/templates' },
+  { name: 'New Template', path: '/template' },
+  { name: 'Suggest Template', path: '/suggest' },
 ];
 
 const loginRoutes: NavigationProps[] = [

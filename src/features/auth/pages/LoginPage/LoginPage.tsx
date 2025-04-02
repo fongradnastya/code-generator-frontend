@@ -29,7 +29,7 @@ const LoginPageComponent: FC = () => {
       .then(
         loginResult => {
           if (loginResult.type.endsWith('fulfilled')) {
-            navigate('/projects');
+            navigate('/templates');
           }
         },
       );

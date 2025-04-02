@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { isServerErrorArray } from 'src/utils/typeGuards';
 
-import { uploadTemplate } from './dispatchers';
+import { getUserTemplates } from './dispatchers';
 import { initialState } from './state';
 
 /** 1. */
-export const templateUploadSlice = createSlice(
+export const userTemplatesSlice = createSlice(
   {
-    name: 'templateUpload',
+    name: 'templates',
     initialState,
     reducers: {
       clearErrors(state) {
@@ -15,17 +15,17 @@ export const templateUploadSlice = createSlice(
       },
     },
     extraReducers: builder => builder
-      .addCase(uploadTemplate.pending, state => {
+      .addCase(getUserTemplates.pending, state => {
         state.isLoading = true;
       })
-      .addCase(uploadTemplate.fulfilled, (state, action) => {
+      .addCase(getUserTemplates.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.uploadResult = action.payload;
+        state.userTemplates = [...action.payload];
         state.error = undefined;
       })
-      .addCase(uploadTemplate.rejected, (state, action) => {
+      .addCase(getUserTemplates.rejected, (state, action) => {
         state.isLoading = false;
-        state.uploadResult = undefined;
+        state.userTemplates = [];
         state.error = isServerErrorArray(action.payload) ? action.payload : [];
       }),
   },

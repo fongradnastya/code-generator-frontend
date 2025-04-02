@@ -1,16 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TemplateService } from 'src/api/services/templateService';
-import { type TemplateUpload } from 'src/models/templateUpload';
+import { type UserProfile } from 'src/models/userProfile';
 import { HandleErrorsService } from 'src/api/services/handleErrorService';
 
 /** 1. */
-export const uploadTemplate = createAsyncThunk(
-  'template/upload',
-  async(template: TemplateUpload, { rejectWithValue }) => {
+export const getUserTemplates = createAsyncThunk(
+  'templates/get',
+  async(userProfile: UserProfile, { rejectWithValue }) => {
     try {
-      const uploadResult = await TemplateService.uploadTemplateForm(template);
-      if (uploadResult != null) {
-        return uploadResult;
+      const userTemplates = await TemplateService.getUserTemplates(userProfile);
+      if (userTemplates != null) {
+        return userTemplates;
       }
       return rejectWithValue(null);
     } catch (error: unknown) {

@@ -8,5 +8,5 @@ export type UploadResultDto = {
   readonly file_name: string;
 
   /** 1. */
-  readonly project_id: number;
+  readonly template_id: number;
 };

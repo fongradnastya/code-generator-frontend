@@ -1,33 +1,33 @@
-import { type ProjectUpload } from 'src/models/projectUpload';
+import { type TemplateUpload } from 'src/models/templateUpload';
 import { type UploadResult } from 'src/models/uploadResult';
-import { type Project } from 'src/models/project';
+import { type Template } from 'src/models/template';
 import { type UserProfile } from 'src/models/userProfile';
 
 import { type UploadResultDto } from '../dtos/uploadResultDto';
-import { type ProjectDto } from '../dtos/projectDto';
-import { projectUploadMapper } from '../mappers/projectUploadMapper';
+import { type TemplateDto } from '../dtos/templateDto';
+import { templateUploadMapper } from '../mappers/templateUploadMapper';
 import { uploadResultMapper } from '../mappers/uploadResultMapper';
-import { projectMapper } from '../mappers/projectMapper';
+import { templateMapper } from '../mappers/templateMapper';
 import { UserProfileMapper } from '../mappers/userProfileMapper';
 
 import { http } from '../http';
 
-export namespace ProjectService {
+export namespace TemplateService {
 
   const uploadUrl = 'upload-template/';
 
-  const projectsUrl = 'user-projects/';
+  const templatesUrl = 'user-templates/';
 
-  const downloadUrl = (projectId: string) => `download/${projectId}/`;
+  const downloadUrl = (templateId: string) => `download/${templateId}/`;
 
   /**
    * 1.
-   * @param projectId 1.
+   * @param templateId 1.
    * @param fileName 1.
    */
-  export async function downloadProject(projectId: string, fileName: string): Promise<void> {
+  export async function downloadTemplate(templateId: string, fileName: string): Promise<void> {
     try {
-      const { data } = await http.get<Blob>(downloadUrl(projectId), {
+      const { data } = await http.get<Blob>(downloadUrl(templateId), {
         responseType: 'blob',
       });
 
@@ -51,11 +51,11 @@ export namespace ProjectService {
 
   /**
    * 1.
-   * @param project 1.
+   * @param template 1.
    */
-  export async function uploadProjectForm(project: ProjectUpload): Promise<UploadResult> {
-    const projectUploadDto = projectUploadMapper.toDto(project);
-    const { data: uploadResultDto } = await http.post<UploadResultDto>(uploadUrl, projectUploadDto, {
+  export async function uploadTemplateForm(template: TemplateUpload): Promise<UploadResult> {
+    const templateUploadDto = templateUploadMapper.toDto(template);
+    const { data: uploadResultDto } = await http.post<UploadResultDto>(uploadUrl, templateUploadDto, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -67,10 +67,10 @@ export namespace ProjectService {
    * 1.
    * @param userProfile 1.
    */
-  export async function getUserProjects(userProfile: UserProfile): Promise<readonly Project[]> {
+  export async function getUserTemplates(userProfile: UserProfile): Promise<readonly Template[]> {
     const userProfileDto = UserProfileMapper.toDto(userProfile);
-    const requestUrl = `${projectsUrl}${userProfileDto.email}/`;
-    const { data: projectsDto } = await http.get<readonly ProjectDto[]>(requestUrl);
-    return projectsDto.map(projectDto => projectMapper.fromDto(projectDto));
+    const requestUrl = `${templatesUrl}${userProfileDto.email}/`;
+    const { data: templatesDto } = await http.get<readonly TemplateDto[]>(requestUrl);
+    return templatesDto.map(templateDto => templateMapper.fromDto(templateDto));
   }
 }

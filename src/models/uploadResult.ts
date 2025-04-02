@@ -8,5 +8,5 @@ export type UploadResult = {
   readonly fileName: string;
 
   /** 1. */
-  readonly projectId: number;
+  readonly templateId: number;
 };

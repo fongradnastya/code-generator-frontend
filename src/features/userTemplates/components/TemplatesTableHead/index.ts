@@ -1,0 +1,1 @@
+export { TemplatesTableHead } from './TemplatesTableHead';

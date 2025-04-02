@@ -6,7 +6,7 @@ import { type UserDto } from '../dtos/userDto';
 import { userMapper } from '../mappers/userMapper';
 import { AppErrorMapper } from '../mappers/appErrorMapper';
 
-// TODO (template preparation): This service was made for template. Remove it from your project.
+// TODO (template preparation): This service was made for template. Remove it from your template.
 export namespace UserApi {
 
   /** Get mock user. */

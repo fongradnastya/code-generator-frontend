@@ -1,11 +1,11 @@
-import { type UploadResult } from 'src/models/uploadResult';
+import { type Template } from 'src/models/template';
 import { type ServerError } from 'src/models/serverError';
 
 /** 1. */
-export type TemplateUploadState = {
+export type UserTemplatesState = {
 
   /** 1. */
-  readonly uploadResult?: UploadResult;
+  readonly userTemplates: readonly Template[];
 
   /** Error. */
   readonly error?: ServerError[];
@@ -15,6 +15,7 @@ export type TemplateUploadState = {
 };
 
 /** 1. */
-export const initialState: TemplateUploadState = {
+export const initialState: UserTemplatesState = {
+  userTemplates: [] as Template[],
   isLoading: false,
 };

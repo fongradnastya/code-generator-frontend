@@ -1,1 +1,0 @@
-export { ProjectsTableHead } from './ProjectsTableHead';

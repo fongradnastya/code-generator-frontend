@@ -2,25 +2,25 @@ import { type FC, memo } from 'react';
 import { useController, type Control } from 'react-hook-form';
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { z } from 'zod';
-import { ProjectStatus } from 'src/models/projectStatus';
-import { ProjectType } from 'src/models/projectType';
+import { TemplateStatus } from 'src/models/templateStatus';
+import { TemplateType } from 'src/models/templateType';
 
 const validationSchema = z.object({
-  projectName: z
+  templateName: z
     .string()
-    .min(1, { message: 'Project name is required' }),
-  projectDescription: z
+    .min(1, { message: 'Template name is required' }),
+  templateDescription: z
     .string()
-    .max(150, { message: 'Project description is too long' }),
-  projectType: z.nativeEnum(ProjectType),
-  projectStatus: z.nativeEnum(ProjectStatus),
-  projectFiles: z
+    .max(150, { message: 'Template description is too long' }),
+  templateType: z.nativeEnum(TemplateType),
+  templateStatus: z.nativeEnum(TemplateStatus),
+  templateFiles: z
     .instanceof(File, { message: 'Please upload a valid file' })
     .optional()
     .refine(file => file instanceof File && file.size > 0, { message: 'File cannot be empty' }),
 });
 
-type ProjectUploadFormValues = z.infer<typeof validationSchema>;
+type TemplateUploadFormValues = z.infer<typeof validationSchema>;
 
 type Props = {
 
@@ -31,10 +31,10 @@ type Props = {
   readonly options: string[];
 
   /** 1. */
-  readonly name: keyof ProjectUploadFormValues;
+  readonly name: keyof TemplateUploadFormValues;
 
   /** 1. */
-  readonly control: Control<ProjectUploadFormValues>;
+  readonly control: Control<TemplateUploadFormValues>;
 };
 
 const FormSelectFieldComponent: FC<Props> = ({ label, options, name, control }) => {
