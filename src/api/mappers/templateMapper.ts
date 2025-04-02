@@ -12,10 +12,10 @@ class TemplateMapper implements IMapper<TemplateDto, Template> {
   /** @inheritdoc */
   public fromDto(dto: TemplateDto): Template {
     return {
-      templateName: dto.template_name,
+      templateName: dto.project_name,
       description: dto.description,
       templateStatus: templateStatusMapper.fromDto(dto.status),
-      templateType: templateTypeMapper.fromDto(dto.template_type),
+      templateType: templateTypeMapper.fromDto(dto.project_type),
       templateId: dto.file_id,
       fileName: dto.file_name,
       creationDate: new Date(dto.created_at),
@@ -25,9 +25,9 @@ class TemplateMapper implements IMapper<TemplateDto, Template> {
   /** @inheritdoc */
   public toDto(data: Template): TemplateDto {
     return {
-      template_name: data.templateName,
+      project_name: data.templateName,
       description: data.description,
-      template_type: templateTypeMapper.toDto(data.templateType),
+      project_type: templateTypeMapper.toDto(data.templateType),
       status: templateStatusMapper.toDto(data.templateStatus),
       file_id: data.templateId,
       file_name: data.fileName,

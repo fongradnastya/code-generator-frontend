@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
 
-const SuggestTemplatePage = lazy(() => import('./pages/TemplateCreationPage').then(module => ({ default: module.SuggestTemplatePage })));
+const TemplateCreationPage = lazy(() => import('./pages/TemplateCreationPage').then(module => ({ default: module.TemplateCreationPage })));
 
-/** Template suggestion routes. */
+/** Template procession routes. */
 export const templateSuggestionRoutes: RouteObject[] = [
   {
-    path: 'suggest',
-    element: <SuggestTemplatePage />,
+    path: 'create',
+    element: <TemplateCreationPage />,
   },
 ];

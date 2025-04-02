@@ -1,1 +1,1 @@
-export { UploadTemplateForm } from './TemplateCreationForm';
+export { TemplateCreationForm } from './TemplateCreationForm';

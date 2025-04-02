@@ -5,13 +5,13 @@ import { type TemplateTypeDto } from './templateTypeDto';
 export type TemplateDto = {
 
   /** 1. */
-  readonly template_name: string;
+  readonly project_name: string;
 
   /** 1. */
   readonly description: string;
 
   /** 1. */
-  readonly template_type: TemplateTypeDto;
+  readonly project_type: TemplateTypeDto;
 
   /** 1. */
   readonly status: TemplateStatusDto;

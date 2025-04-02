@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 
 import { TemplateForm } from '../../components/TemplateForm';
 
-import styles from './TemplateCreationPage.module.css';
+import styles from './ProcessTemplatePage.module.css';
 
-const TemplateCreationPageComponent: FC = () => {
+const ProcessTemplatePageComponent: FC = () => {
   const open = useSelector(selectIsDrawerOpen);
   return (
     <main className={`${styles.layout} ${open ? styles.layoutOpen : ''}`}>
@@ -17,7 +17,7 @@ const TemplateCreationPageComponent: FC = () => {
           variant="h5"
           component="h5"
         >
-          Create New Template
+          Process Template
         </Typography>
         <TemplateForm/>
       </Container>
@@ -26,4 +26,4 @@ const TemplateCreationPageComponent: FC = () => {
 };
 
 /** Template creation page component. */
-export const TemplateCreationPage = memo(TemplateCreationPageComponent);
+export const ProcessTemplatePage = memo(ProcessTemplatePageComponent);

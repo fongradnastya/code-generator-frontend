@@ -12,10 +12,10 @@ class TemplateUploadMapper implements IMapper<TemplateUploadDto, TemplateUpload>
   /** @inheritdoc */
   public fromDto(dto: TemplateUploadDto): TemplateUpload {
     return {
-      templateName: dto.template_name,
+      templateName: dto.project_name,
       templateDescription: dto.description,
       templateStatus: templateStatusMapper.fromDto(dto.status),
-      templateType: templateTypeMapper.fromDto(dto.template_type),
+      templateType: templateTypeMapper.fromDto(dto.project_type),
       templateFiles: dto.file,
     };
   }
@@ -23,9 +23,9 @@ class TemplateUploadMapper implements IMapper<TemplateUploadDto, TemplateUpload>
   /** @inheritdoc */
   public toDto(data: TemplateUpload): TemplateUploadDto {
     return {
-      template_name: data.templateName,
+      project_name: data.templateName,
       description: data.templateDescription,
-      template_type: templateTypeMapper.toDto(data.templateType),
+      project_type: templateTypeMapper.toDto(data.templateType),
       status: templateStatusMapper.toDto(data.templateStatus),
       file: data.templateFiles,
     };

@@ -22,8 +22,8 @@ const DRAWER_WIDTH = 280;
 
 const mainRoutes: NavigationProps[] = [
   { name: 'My Templates', path: '/templates' },
-  { name: 'New Template', path: '/template' },
-  { name: 'Suggest Template', path: '/suggest' },
+  { name: 'Process Template', path: '/process' },
+  { name: 'Create Template', path: '/create' },
 ];
 
 const loginRoutes: NavigationProps[] = [

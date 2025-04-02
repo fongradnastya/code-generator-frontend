@@ -8,7 +8,7 @@ import { selectUserEmail } from 'src/store/authorization/selectors';
 import { Loader } from 'src/components/Loader';
 import { getUserTemplates } from 'src/store/userTemplates/dispatchers';
 
-import { TemplateTable } from '../../components/TemplatesTable';
+import { TemplateTable } from '../../components/TemplateTable';
 
 import styles from './TemplatesPage.module.css';
 
@@ -35,7 +35,7 @@ const TemplatesPageComponent: FC = () => {
           variant="h5"
           component="h5"
         >
-          Templates
+          My Templates
         </Typography>
         {!isLoading && !error && <TemplateTable templates={templates} />}
         { isLoading && <Loader/> }

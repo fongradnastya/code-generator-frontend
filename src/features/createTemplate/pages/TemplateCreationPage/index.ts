@@ -1,1 +1,1 @@
-export { SuggestTemplatePage } from './TemplateCreationPage';
+export { TemplateCreationPage } from './TemplateCreationPage';

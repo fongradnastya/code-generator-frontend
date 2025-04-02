@@ -16,7 +16,7 @@ export namespace TemplateService {
 
   const uploadUrl = 'upload-template/';
 
-  const templatesUrl = 'user-templates/';
+  const templatesUrl = 'user-projects/';
 
   const downloadUrl = (templateId: string) => `download/${templateId}/`;
 

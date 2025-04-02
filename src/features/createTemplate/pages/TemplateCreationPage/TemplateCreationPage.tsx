@@ -11,11 +11,11 @@ import { uploadTemplate } from 'src/store/templateUpload/dispatchers';
 import { Loader } from 'src/components/Loader';
 import Container from '@mui/material/Container';
 
-import { UploadTemplateForm } from '../../components/TemplateCreationForm';
+import { TemplateCreationForm } from '../../components/TemplateCreationForm';
 
-import styles from './SuggestTemplatePage.module.css';
+import styles from './TemplateCreationPage.module.css';
 
-const SuggestTemplatePageComponent: FC = () => {
+const TemplateCreationPageComponent: FC = () => {
   const open = useAppSelector(selectIsDrawerOpen);
   const templatesUrl = '/templates';
   const dispatch = useAppDispatch();
@@ -45,9 +45,9 @@ const SuggestTemplatePageComponent: FC = () => {
           variant="h5"
           component="h5"
         >
-          Suggest New Template
+          Create New Template
         </Typography>
-        <UploadTemplateForm
+        <TemplateCreationForm
           onSubmit={submitForm}
           serverErrors={loginErrors ?? []}
         />
@@ -58,4 +58,4 @@ const SuggestTemplatePageComponent: FC = () => {
 };
 
 /** Suggest template page component. */
-export const SuggestTemplatePage = memo(SuggestTemplatePageComponent);
+export const TemplateCreationPage = memo(TemplateCreationPageComponent);

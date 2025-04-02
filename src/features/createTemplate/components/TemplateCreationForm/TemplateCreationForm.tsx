@@ -13,7 +13,7 @@ import Chip from '@mui/material/Chip';
 
 import { FileUploadDialog } from '../FileUploadDialog';
 
-import styles from './UploadTemplateForm.module.css';
+import styles from './TemplateCreationForm.module.css';
 
 const validationSchema = z.object({
   templateName: z
@@ -49,7 +49,7 @@ const defaultValues: TemplateUploadFormValues = {
   templateStatus: TemplateStatus.Draft,
 };
 
-const UploadTemplateFormComponent: FC<Props> = ({
+const TemplateCreationFormComponent: FC<Props> = ({
   onSubmit,
   serverErrors,
 }) => {
@@ -126,13 +126,13 @@ const UploadTemplateFormComponent: FC<Props> = ({
           error={errors.templateDescription}
         />
         <FormSelectField
-          label="Template Type"
+          label="Project Type"
           options={Object.values(TemplateType)}
           control={control}
           name="templateType"
         />
         <FormSelectField
-          label="Template Status"
+          label="Project Status"
           options={Object.values(TemplateStatus)}
           control={control}
           name="templateStatus"
@@ -176,4 +176,4 @@ const UploadTemplateFormComponent: FC<Props> = ({
 };
 
 /** Upload template form component. */
-export const UploadTemplateForm = memo(UploadTemplateFormComponent);
+export const TemplateCreationForm = memo(TemplateCreationFormComponent);
