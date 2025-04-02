@@ -1,7 +1,6 @@
 import { type FC, memo } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import { type Project } from 'src/models/project';
 
 import styles from './ProjectTableRow.module.css';
@@ -24,7 +23,6 @@ type Props = {
 const ProjectTableRowComponent: FC<Props> = ({
   project,
   isItemSelected,
-  labelId,
   onRowClick,
 }) => (
   <TableRow
@@ -37,15 +35,6 @@ const ProjectTableRowComponent: FC<Props> = ({
     selected={isItemSelected}
     className={styles.tableRow}
   >
-    <TableCell padding="checkbox">
-      <Checkbox
-        color="primary"
-        checked={isItemSelected}
-        inputProps={{
-          'aria-labelledby': labelId,
-        }}
-      />
-    </TableCell>
     <TableCell align="left">
       {project.projectName}
     </TableCell>

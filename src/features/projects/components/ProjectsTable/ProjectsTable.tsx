@@ -12,7 +12,6 @@ import { type Project } from 'src/models/project';
 import { type TableColumn } from 'src/models/tableColumn';
 
 import { getProjectsComparator } from '../../utils/comparators';
-import { ProjectTableToolbar } from '../ProjectTableToolbar';
 import { ProjectsTableHead } from '../ProjectsTableHead';
 import { ProjectTableRow } from '../ProjectTableRow';
 import { useTableRowSelect } from '../../hooks/useTableRowSelect';
@@ -91,7 +90,6 @@ const ProjectTableComponent: FC<Props> = ({ projects }) => {
   return (
     <Box className={styles.box}>
       <Paper className={styles.paper}>
-        <ProjectTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             className={styles.table}

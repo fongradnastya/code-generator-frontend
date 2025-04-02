@@ -4,7 +4,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import { type Project } from 'src/models/project';
 import { type Order } from 'src/models/order';
@@ -36,11 +35,8 @@ type Props = {
 
 const ProjectsTableHeadComponent: FC<Props> = ({
   tableColumns,
-  onSelectAllClick,
   order,
   orderBy,
-  numSelected,
-  rowCount,
   onRequestSort,
 }) => {
   const createSortHandler =
@@ -51,17 +47,6 @@ const ProjectsTableHeadComponent: FC<Props> = ({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
         {tableColumns.map(column => (
           <TableCell
             key={column.accessor}
@@ -69,6 +54,7 @@ const ProjectsTableHeadComponent: FC<Props> = ({
             sortDirection={orderBy === column.accessor ? order : false}
           >
             <TableSortLabel
+              sx={{ fontWeight: 600, color: '#555' }}
               active={orderBy === column.accessor}
               direction={orderBy === column.accessor ? order : 'asc'}
               onClick={createSortHandler(column.accessor)}
