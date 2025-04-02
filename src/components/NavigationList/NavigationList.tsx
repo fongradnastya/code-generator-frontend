@@ -4,8 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { NavLink } from 'react-router-dom';
 import { type NavigationProps } from 'src/utils/types/navigationProps';
 
@@ -23,7 +21,7 @@ type Props = {
 
 const NavigationListComponent: FC<Props> = ({ items, currentPage, onClick }: Props) => (
   <List>
-    {items.map((item, index) => (
+    {items.map(item => (
       <ListItem key={item.name} disablePadding>
         <ListItemButton
           component={NavLink}
@@ -32,7 +30,7 @@ const NavigationListComponent: FC<Props> = ({ items, currentPage, onClick }: Pro
           selected={item.name === currentPage}
         >
           <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            <item.icon />
           </ListItemIcon>
           <ListItemText primary={item.name} />
         </ListItemButton>
