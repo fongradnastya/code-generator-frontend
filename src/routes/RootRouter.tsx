@@ -1,9 +1,9 @@
 import { type FC } from 'react';
 import { Navigate, type RouteObject, useRoutes } from 'react-router-dom';
 import { authRoutes } from 'src/features/auth/routes';
-import { templateCreationRoutes } from 'src/features/templateCreation/routes';
-import { templatesRoutes } from 'src/features/templates/routes';
-import { templateSuggestionRoutes } from 'src/features/suggestTemplate/routes';
+import { templateCreationRoutes } from 'src/features/processTemplate/routes';
+import { templatesRoutes } from 'src/features/userTemplates/routes';
+import { templateSuggestionRoutes } from 'src/features/createTemplate/routes';
 
 import { AuthGuard } from './guards/authGuard';
 
