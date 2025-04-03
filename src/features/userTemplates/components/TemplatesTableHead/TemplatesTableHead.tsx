@@ -1,4 +1,4 @@
-import { type FC, memo, type MouseEvent, type ChangeEvent } from 'react';
+import { type FC, memo, type MouseEvent } from 'react';
 import Box from '@mui/material/Box';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -14,23 +14,14 @@ type Props = {
   /** Table columns. */
   readonly tableColumns: readonly TableColumn<Template>[];
 
-  /** Number of selected rows. */
-  readonly numSelected: number;
-
   /** Handles sort requests. */
   readonly onRequestSort: (event: MouseEvent<unknown>, property: keyof Template) => void;
-
-  /** Handles select all clicks. */
-  readonly onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
 
   /** Tables order. */
   readonly order: Order;
 
   /** Column that table is ordered by. */
   readonly orderBy: string;
-
-  /** Rows number. */
-  readonly rowCount: number;
 };
 
 const TemplatesTableHeadComponent: FC<Props> = ({
@@ -68,6 +59,7 @@ const TemplatesTableHeadComponent: FC<Props> = ({
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell/>
       </TableRow>
     </TableHead>
   );

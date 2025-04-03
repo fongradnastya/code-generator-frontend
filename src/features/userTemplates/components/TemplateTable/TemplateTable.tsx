@@ -14,7 +14,6 @@ import { type TableColumn } from 'src/models/tableColumn';
 import { getTemplatesComparator } from '../../utils/comparators';
 import { TemplatesTableHead } from '../TemplatesTableHead';
 import { TemplateTableRow } from '../TemplatesTableRow';
-import { useTableRowSelect } from '../../hooks/useTableRowSelect';
 
 import styles from './TemplateTable.module.css';
 
@@ -50,11 +49,8 @@ const TemplateTableComponent: FC<Props> = ({ templates }) => {
   const [orderBy, setOrderBy] = useState<keyof Template>('templateId');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE_OPTIONS[0]);
-  const {
-    selected,
-    handleSelectAllClick,
-    handleRowClick,
-  } = useTableRowSelect(templates);
+
+  const handleRowClick = (_id: string) => null;
 
   const handleRequestSort = useCallback((
     _event: MouseEvent<unknown>,
@@ -98,19 +94,15 @@ const TemplateTableComponent: FC<Props> = ({ templates }) => {
           >
             <TemplatesTableHead
               tableColumns={columns}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={templates.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => (
                 <TemplateTableRow
                   key={index}
                   template={row}
-                  isItemSelected={selected.includes(row.templateId)}
                   labelId={`table-checkbox-${index}`}
                   onRowClick={handleRowClick}
                 />
