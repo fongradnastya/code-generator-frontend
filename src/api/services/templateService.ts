@@ -18,14 +18,14 @@ export namespace TemplateService {
 
   const templatesUrl = 'user-projects/';
 
-  const downloadUrl = (templateId: number) => `download-template/${templateId}/`;
+  const downloadUrl = (templateId: string) => `download-template/${templateId}/`;
 
   /**
    * 1.
    * @param templateId 1.
    * @param fileName 1.
    */
-  export async function downloadTemplate(templateId: number): Promise<void> {
+  export async function downloadTemplate(templateId: string): Promise<void> {
     try {
       const response = await http.get<Blob>(downloadUrl(templateId), {
         responseType: 'blob',

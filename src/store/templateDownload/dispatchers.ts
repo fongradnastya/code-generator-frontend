@@ -5,7 +5,7 @@ import { HandleErrorsService } from 'src/api/services/handleErrorService';
 /** 1. */
 export const downloadTemplate = createAsyncThunk(
   'template/download',
-  async(templateId: number, { rejectWithValue }) => {
+  async(templateId: string, { rejectWithValue }) => {
     try {
       const uploadResult = await TemplateService.downloadTemplate(templateId);
       return uploadResult;
