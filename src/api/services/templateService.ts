@@ -18,26 +18,41 @@ export namespace TemplateService {
 
   const templatesUrl = 'user-projects/';
 
-  const downloadUrl = (templateId: string) => `download/${templateId}/`;
+  const downloadUrl = (templateId: number) => `download-template/${templateId}/`;
 
   /**
    * 1.
    * @param templateId 1.
    * @param fileName 1.
    */
-  export async function downloadTemplate(templateId: string, fileName: string): Promise<void> {
+  export async function downloadTemplate(templateId: number): Promise<void> {
     try {
-      const { data } = await http.get<Blob>(downloadUrl(templateId), {
+      const response = await http.get<Blob>(downloadUrl(templateId), {
         responseType: 'blob',
       });
 
+      let extractedFileName;
+
+      // Try to extract filename from Content-Disposition header if not provided
+      const contentDisposition = response.headers['content-disposition'];
+
+      if (contentDisposition) {
+        const matches = contentDisposition.match(/filename="(.+)"/);
+        if (matches?.[1]) {
+          extractedFileName = matches[1];
+        }
+      }
+
+      // Default to a generic filename if extraction fails
+      extractedFileName = extractedFileName ?? `download_${templateId}`;
+
       // Create a temporary URL for the file
-      const fileURL = window.URL.createObjectURL(new Blob([data]));
+      const fileURL = window.URL.createObjectURL(response.data);
 
       // Use an anchor tag but don't append it to the DOM
       const link = document.createElement('a');
       link.href = fileURL;
-      link.download = fileName;
+      link.download = extractedFileName;
 
       // Trigger the download by simulating a click
       link.click();

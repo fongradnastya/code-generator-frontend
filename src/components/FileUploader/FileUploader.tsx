@@ -39,6 +39,7 @@ const FileUploaderComponent: FC<Props> = ({ onStatusChange, onFilesChange }) => 
       <input
         type="file"
         onChange={handleFileSelect}
+        accept=".zip"
         ref={fileInputRef}
         className={styles.input}
       />

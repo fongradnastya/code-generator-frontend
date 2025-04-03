@@ -5,6 +5,7 @@ import { drawerSlice } from './drawer/slice';
 import { authorizationSlice } from './authorization/slice';
 import { templateUploadSlice } from './templateUpload/slice';
 import { userTemplatesSlice } from './userTemplates/slice';
+import { templateDownloadSlice } from './templateDownload/slice';
 
 /** The Redux store of the application. */
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     drawer: drawerSlice.reducer,
     authorization: authorizationSlice.reducer,
     templateUpload: templateUploadSlice.reducer,
+    templateDownload: templateDownloadSlice.reducer,
     templates: userTemplatesSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware({
