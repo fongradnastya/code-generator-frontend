@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { Order } from 'src/models/order';
 import { type Template } from 'src/models/template';
 import { type TableColumn } from 'src/models/tableColumn';
+import { useNavigate } from 'react-router-dom';
 
 import { getTemplatesComparator } from '../../utils/comparators';
 import { TemplatesTableHead } from '../TemplatesTableHead';
@@ -45,12 +46,15 @@ type Props = {
 const PAGE_SIZE_OPTIONS = [5, 10, 25];
 
 const TemplateTableComponent: FC<Props> = ({ templates }) => {
+  const navigate = useNavigate();
   const [order, setOrder] = useState(Order.Ascending);
   const [orderBy, setOrderBy] = useState<keyof Template>('templateId');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(PAGE_SIZE_OPTIONS[0]);
 
-  const handleRowClick = (_id: string) => null;
+  const handleRowClick = (id: string) => {
+    navigate(`/process/${id}`);
+  };
 
   const handleRequestSort = useCallback((
     _event: MouseEvent<unknown>,

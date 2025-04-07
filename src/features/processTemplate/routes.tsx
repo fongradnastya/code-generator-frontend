@@ -6,7 +6,7 @@ const TemplateCreationPage = lazy(() => import('./pages/ProcessTemplatePage').th
 /** Template creation routes. */
 export const templateCreationRoutes: RouteObject[] = [
   {
-    path: 'process',
+    path: 'process/:id',
     element: <TemplateCreationPage />,
   },
 ];

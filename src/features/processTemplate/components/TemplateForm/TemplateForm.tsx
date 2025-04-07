@@ -1,5 +1,6 @@
-import { memo, type FC } from 'react';
-import { useForm } from 'react-hook-form';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { memo, type FC, useEffect, useState } from 'react';
+import { useForm, type FieldValues } from 'react-hook-form';
 import { Button } from '@mui/material';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,73 +9,68 @@ import { FormCheckbox } from 'src/components/FormCheckbox';
 
 import styles from './TemplateForm.module.css';
 
-const formData = {
-  templateName: 'My Awesome Template',
-  templateSlug: 'my_awesome_template',
-  description: 'Behold My Awesome Template!',
-  authorName: 'Daniel Roy Greenfeld',
-  email: 'daniel@example.com',
-  openSourceLicense: ['MIT', 'BSD', 'GPLv3', 'Apache Software License 2.0', 'Not open source'],
-  usernameType: ['username', 'email'],
-  editor: ['None', 'PyCharm', 'VS Code'],
-  cloudProvider: ['AWS', 'GCP', 'Azure', 'None'],
-  ciTool: ['None', 'Travis', 'Gitlab', 'Github', 'Drone'],
-  debug: 'n',
-};
-
-const defaultValues = {
-  templateName: formData.templateName,
-  templateSlug: formData.templateSlug,
-  description: formData.description,
-  authorName: formData.authorName,
-  email: formData.email,
-  openSourceLicense: formData.openSourceLicense[0],
-  usernameType: formData.usernameType[0],
-  editor: formData.editor[0],
-  cloudProvider: formData.cloudProvider[0],
-  ciTool: formData.ciTool[0],
-  debug: formData.debug,
-};
-
 const schema = z.object({
-  templateName: z.string().min(1, { message: 'Template name is required' }),
-  email: z.string().min(1, { message: 'Email is required' })
-    .email('Invalid email address'),
+  // Schema will be dynamically set based on the formData
 });
 
-type FormSchema = z.infer<typeof schema>;
+type FormSchema = FieldValues;
 
-const TemplateFormComponent: FC = () => {
-  const { handleSubmit, register } = useForm<FormSchema>({
+type TemplateFormProps = {
+
+  /** 1. */
+  readonly initialData: any;
+};
+
+const TemplateFormComponent: FC<TemplateFormProps> = ({ initialData }) => {
+  const [formData, setFormData] = useState<any>(initialData);
+  const { register, reset } = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    defaultValues,
+    defaultValues: formData,
   });
 
-  const onSubmit = (data: FormSchema) => {
-    // eslint-disable-next-line no-console
-    console.log('Form Data:', data);
-  };
+  // Reset form whenever initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+      reset(initialData);
+    }
+  }, [initialData, reset]);
 
-  const renderField = (key: string, value: string | string[]) => {
+  const renderField = (key: string, value: any) => {
+    if (Array.isArray(value)) {
+      return (
+        <select {...register(key)}>
+          {value.map((option: string) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      );
+    }
     if (typeof value === 'string' && (value === 'y' || value === 'n')) {
       return (
         <FormCheckbox
           label={key}
           value={value === 'y'}
-          registration={register(key as keyof FormSchema)}
+          registration={register(key)}
         />
       );
     }
     return (
       <FormInputField
-        registration={register(key as keyof FormSchema)}
+        registration={register(key)}
         label={key}
       />
     );
   };
 
+  if (!formData) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form}>
       {Object.entries(formData).map(([key, value]) => (
         <div key={key} style={{ marginBottom: '16px' }}>
           {renderField(key, value)}

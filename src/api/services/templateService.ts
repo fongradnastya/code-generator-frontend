@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type TemplateUpload } from 'src/models/templateUpload';
 import { type UploadResult } from 'src/models/uploadResult';
 import { type Template } from 'src/models/template';
@@ -19,6 +20,25 @@ export namespace TemplateService {
   const templatesUrl = 'user-projects/';
 
   const downloadUrl = (templateId: string) => `download-template/${templateId}/`;
+
+  const templateJsonUrl = (projectId: string) => `get-template-json/${projectId}/`;
+
+  /**
+   * Fetches the template JSON for a given project.
+   * @param projectId The project ID to fetch the template JSON for.
+   * @returns A Promise that resolves to a JSON object of the template.
+   */
+  export async function getTemplateJson(projectId: string): Promise<any> {
+    try {
+      const response = await http.get(templateJsonUrl(projectId));
+
+      // Assuming the response is a valid JSON object
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching template JSON:', error);
+      throw new Error('Failed to fetch template JSON');
+    }
+  }
 
   /**
    * 1.
