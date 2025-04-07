@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { memo, type FC, useEffect, useState } from 'react';
+import { memo, type FC, useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectIsDrawerOpen } from 'src/store/drawer/selectors';
 import Container from '@mui/material/Container';
@@ -17,6 +17,14 @@ const ProcessTemplatePageComponent: FC = () => {
   const navigate = useNavigate();
 
   const [templateData, setTemplateData] = useState<any>(null);
+
+  const handleSubmit = useCallback(() => {
+    if (id == null) {
+      navigate('/templates');
+    } else {
+      TemplateService.processTemplate(id, templateData);
+    }
+  }, [templateData, navigate, id]);
 
   useEffect(() => {
     if (id == null) {
@@ -45,8 +53,10 @@ const ProcessTemplatePageComponent: FC = () => {
         <Typography variant="h5" component="h5">
           Process Template
         </Typography>
-        {/* Pass the templateData as a prop to TemplateForm */}
-        <TemplateForm initialData={templateData} />
+        <TemplateForm
+          initialData={templateData}
+          onSubmit={handleSubmit}
+        />
       </Container>
     </main>
   );

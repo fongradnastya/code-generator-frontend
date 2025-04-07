@@ -19,9 +19,37 @@ export namespace TemplateService {
 
   const templatesUrl = 'user-projects/';
 
+  const processTemplateUrl = 'process-template/';
+
   const downloadUrl = (templateId: string) => `download-template/${templateId}/`;
 
   const templateJsonUrl = (projectId: string) => `get-template-json/${projectId}/`;
+
+  /**
+   * Processes the template with the provided project ID and context data.
+   * @param projectId The project ID.
+   * @param contextData The context data to be passed for template processing.
+   * @returns A Promise that resolves to the processed template (ZIP file in response).
+   */
+  export async function processTemplate(projectId: string, contextData: any): Promise<void> {
+    try {
+      const response = await http.post(processTemplateUrl, contextData, {
+        params: { project_id: projectId },
+        responseType: 'blob',
+      });
+      const blob = new Blob([response.data], { type: 'application/zip' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'processed_template.zip';
+      link.click();
+
+      // Clean up the object URL
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Error processing the template:', error);
+      throw new Error('Failed to process template');
+    }
+  }
 
   /**
    * Fetches the template JSON for a given project.

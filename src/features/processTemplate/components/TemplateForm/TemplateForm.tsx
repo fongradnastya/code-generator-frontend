@@ -19,11 +19,17 @@ type TemplateFormProps = {
 
   /** 1. */
   readonly initialData: any;
+
+  /** 1. */
+  readonly onSubmit: () => void;
 };
 
-const TemplateFormComponent: FC<TemplateFormProps> = ({ initialData }) => {
+const TemplateFormComponent: FC<TemplateFormProps> = ({
+  initialData,
+  onSubmit,
+}) => {
   const [formData, setFormData] = useState<any>(initialData);
-  const { register, reset } = useForm<FormSchema>({
+  const { handleSubmit, register, reset } = useForm<FormSchema>({
     resolver: zodResolver(schema),
     defaultValues: formData,
   });
@@ -70,7 +76,7 @@ const TemplateFormComponent: FC<TemplateFormProps> = ({ initialData }) => {
   }
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       {Object.entries(formData).map(([key, value]) => (
         <div key={key} style={{ marginBottom: '16px' }}>
           {renderField(key, value)}
