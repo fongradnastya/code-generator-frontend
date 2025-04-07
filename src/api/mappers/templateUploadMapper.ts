@@ -17,6 +17,7 @@ class TemplateUploadMapper implements IMapper<TemplateUploadDto, TemplateUpload>
       templateStatus: templateStatusMapper.fromDto(dto.status),
       templateType: templateTypeMapper.fromDto(dto.project_type),
       templateFiles: dto.file,
+      jsonFile: dto.json_file,
     };
   }
 
@@ -28,6 +29,7 @@ class TemplateUploadMapper implements IMapper<TemplateUploadDto, TemplateUpload>
       project_type: templateTypeMapper.toDto(data.templateType),
       status: templateStatusMapper.toDto(data.templateStatus),
       file: data.templateFiles,
+      json_file: data.jsonFile,
     };
   }
 }

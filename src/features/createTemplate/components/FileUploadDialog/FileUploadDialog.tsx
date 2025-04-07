@@ -14,29 +14,31 @@ import { FileUploader } from '../../../../components/FileUploader';
 
 import styles from './FileUploadDialog.module.css';
 
-/** Available file status messages to display. */
-enum FileMessage {
-  Success = 'A file was successfully loaded.',
-  NoFileError = 'File was not selected.',
-  LoadingError = 'Wrong file format.',
-  ParsingError = 'An error occurred on file parsing.',
-}
-
 type Props = {
 
-  /** An array of uploaded files. */
-  readonly uploadedFiles: readonly File[];
+  /** 1. */
+  readonly uploadedFiles: {
 
-  /** Handles file uploading. */
-  readonly onFilesUpload: (files: readonly File[]) => void;
+    /** 1. */
+    zip?: File | null;
 
-  /** Handles file deletion. */
+    /** 1. */
+    json?: File | null;
+  };
+
+  /** 1. */
+  readonly onZipFileUpload: (file: File) => void;
+
+  /** 1. */
+  readonly onJsonFileUpload: (file: File) => void;
+
+  /** 1. */
   readonly onFileDelete: (file: File) => void;
 
-  /** Is dialog open. */
+  /** 1. */
   readonly isFileDialogOpen: boolean;
 
-  /** Handle file dialog close. */
+  /** 1. */
   readonly onFileDialogClose: () => void;
 };
 
@@ -44,7 +46,8 @@ const FileUploadDialogComponent: FC<Props> = ({
   isFileDialogOpen,
   uploadedFiles,
   onFileDialogClose,
-  onFilesUpload,
+  onZipFileUpload,
+  onJsonFileUpload,
   onFileDelete,
 }) => {
   const [fileUploadStatus, setFileUploadStatus] = useState(FileUploadStatus.Empty);
@@ -56,15 +59,7 @@ const FileUploadDialogComponent: FC<Props> = ({
     setSnackbarMessage(null);
   }, [setIsSnackbarOpen]);
 
-  const handleFileSet = useCallback((newFiles: readonly File[]) => {
-    onFilesUpload(newFiles);
-  }, [onFilesUpload]);
-
-  const handleFileUploadStatusSet = useCallback((newStatus: FileUploadStatus) => {
-    setFileUploadStatus(newStatus);
-  }, [setFileUploadStatus]);
-
-  const displaySnackbarMessage = useCallback((message: FileMessage, severity: MessageSeverity) => {
+  const displaySnackbarMessage = useCallback((message: string, severity: MessageSeverity) => {
     setSnackbarMessage({
       message,
       severity,
@@ -72,21 +67,20 @@ const FileUploadDialogComponent: FC<Props> = ({
     setIsSnackbarOpen(true);
   }, [setSnackbarMessage, setIsSnackbarOpen]);
 
-  const parseFiles = useCallback(() => {
-    if (uploadedFiles[0] != null) {
+  const handleFileUpload = useCallback(() => {
+    if (uploadedFiles.zip && uploadedFiles.json) {
       onFileDialogClose();
-      onFilesUpload([]);
-      setFileUploadStatus(FileUploadStatus.Empty);
+      setFileUploadStatus(FileUploadStatus.Accept);
     } else {
-      displaySnackbarMessage(FileMessage.NoFileError, MessageSeverity.Error);
+      displaySnackbarMessage('Both ZIP and JSON files must be uploaded.', MessageSeverity.Error);
     }
-  }, [displaySnackbarMessage, onFileDialogClose, onFilesUpload, uploadedFiles]);
+  }, [displaySnackbarMessage, onFileDialogClose, uploadedFiles]);
 
   useEffect(() => {
     if (fileUploadStatus === FileUploadStatus.Reject) {
-      displaySnackbarMessage(FileMessage.LoadingError, MessageSeverity.Error);
+      displaySnackbarMessage('Error in file format.', MessageSeverity.Error);
     } else if (fileUploadStatus === FileUploadStatus.Accept) {
-      displaySnackbarMessage(FileMessage.Success, MessageSeverity.Success);
+      displaySnackbarMessage('Files successfully uploaded.', MessageSeverity.Success);
     } else if (fileUploadStatus === FileUploadStatus.Empty) {
       handleSnackbarClose();
     }
@@ -99,40 +93,48 @@ const FileUploadDialogComponent: FC<Props> = ({
         onClose={onFileDialogClose}
         className={styles.dialog}
       >
-        <DialogTitle
-          className={styles.dialogTitle}
-        >
-          Upload template files
+        <DialogTitle className={styles.dialogTitle}>
+          Upload Template Files
         </DialogTitle>
-        <DialogContent
-          className={styles.dialogContent}
-        >
-          <FileUploader
-            onFilesChange={handleFileSet}
-            onStatusChange={handleFileUploadStatusSet}
-          />
-          <div>
-            {uploadedFiles.map((file, index) => (
+        <DialogContent className={styles.dialogContent}>
+          <div className={styles.uploadContainer}>
+            <FileUploader
+              onFilesChange={files => onZipFileUpload(files[0])}
+              onStatusChange={setFileUploadStatus}
+              fileFormat=".zip"
+            />
+            {uploadedFiles.zip && (
               <Chip
-                key={index}
-                label={file.name}
-                onDelete={() => onFileDelete(file)}
+                label={uploadedFiles.zip.name}
+                onDelete={() => uploadedFiles.zip ? onFileDelete(uploadedFiles.zip) : null}
                 color="primary"
               />
-            ))}
+            )}
+          </div>
+          <div className={styles.uploadContainer}>
+            <FileUploader
+              onFilesChange={files => onJsonFileUpload(files[0])}
+              onStatusChange={setFileUploadStatus}
+              fileFormat=".json"
+            />
+            {uploadedFiles.json && (
+              <Chip
+                label={uploadedFiles.json.name}
+                onDelete={() => uploadedFiles.json ? onFileDelete(uploadedFiles.json) : null}
+                color="primary"
+              />
+            )}
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onFileDialogClose}>Quit</Button>
-          <Button
-            onClick={parseFiles}
-            variant="contained"
-          >
+          <Button onClick={onFileDialogClose}>Cancel</Button>
+          <Button onClick={handleFileUpload} variant="contained">
             Upload
           </Button>
         </DialogActions>
       </Dialog>
-      { snackbarMessage && (
+
+      {snackbarMessage && (
         <SnackbarMessage
           isSnackbarOpen={isSnackbarOpen}
           onSnackbarClose={handleSnackbarClose}
@@ -144,5 +146,5 @@ const FileUploadDialogComponent: FC<Props> = ({
   );
 };
 
-/** File upload dialog component. */
+/** 1. */
 export const FileUploadDialog = memo(FileUploadDialogComponent);

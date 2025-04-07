@@ -13,9 +13,16 @@ type Props = {
 
   /** Sets new files. */
   readonly onFilesChange: (newFiles: readonly File[]) => void;
+
+  /** 1. */
+  readonly fileFormat: string;
 };
 
-const FileUploaderComponent: FC<Props> = ({ onStatusChange, onFilesChange }) => {
+const FileUploaderComponent: FC<Props> = ({
+  onStatusChange,
+  onFilesChange,
+  fileFormat,
+}) => {
   const {
     isDragging,
     fileInputRef,
@@ -39,7 +46,7 @@ const FileUploaderComponent: FC<Props> = ({ onStatusChange, onFilesChange }) => 
       <input
         type="file"
         onChange={handleFileSelect}
-        accept=".zip"
+        accept={fileFormat}
         ref={fileInputRef}
         className={styles.input}
       />

@@ -15,16 +15,17 @@ import { FileUploadDialog } from '../FileUploadDialog';
 
 import styles from './TemplateCreationForm.module.css';
 
+// Define validation schema for the form with separate file fields
 const validationSchema = z.object({
-  templateName: z
-    .string()
-    .min(1, { message: 'Template name is required' }),
-  templateDescription: z
-    .string()
-    .max(150, { message: 'Template description is too long' }),
+  templateName: z.string().min(1, { message: 'Template name is required' }),
+  templateDescription: z.string().max(150, { message: 'Template description is too long' }),
   templateType: z.nativeEnum(TemplateType),
   templateStatus: z.nativeEnum(TemplateStatus),
   templateFiles: z
+    .instanceof(File, { message: 'Please upload a valid file' })
+    .optional()
+    .refine(file => file instanceof File && file.size > 0, { message: 'File cannot be empty' }),
+  jsonFile: z
     .instanceof(File, { message: 'Please upload a valid file' })
     .optional()
     .refine(file => file instanceof File && file.size > 0, { message: 'File cannot be empty' }),
@@ -45,6 +46,7 @@ const defaultValues: TemplateUploadFormValues = {
   templateName: '',
   templateDescription: '',
   templateFiles: undefined,
+  jsonFile: undefined,
   templateType: TemplateType.Django,
   templateStatus: TemplateStatus.Draft,
 };
@@ -54,7 +56,8 @@ const TemplateCreationFormComponent: FC<Props> = ({
   serverErrors,
 }) => {
   const [isFileDialogOpen, setIsFileDialogOpen] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<readonly File[]>([]);
+  const [uploadedZipFile, setUploadedZipFile] = useState<File | null>(null);
+  const [uploadedJsonFile, setUploadedJsonFile] = useState<File | null>(null);
 
   const { handleSubmit, formState: { errors }, register, setError, setValue, control } = useForm({
     defaultValues,
@@ -65,40 +68,33 @@ const TemplateCreationFormComponent: FC<Props> = ({
     HandleErrorsService.setErrors(serverErrors, setError, defaultValues);
   }, [serverErrors, setError]);
 
-  const handleFileDialogClose = useCallback(
-    () => setIsFileDialogOpen(false),
-    [],
-  );
+  const handleFileDialogClose = useCallback(() => setIsFileDialogOpen(false), []);
+  const handleFileDialogOpen = useCallback(() => setIsFileDialogOpen(true), []);
 
-  const handleFileDialogOpen = useCallback(
-    () => setIsFileDialogOpen(true),
-    [],
-  );
+  const handleZipFileUpload = useCallback((file: File) => {
+    setUploadedZipFile(file);
+    setValue('templateFiles', file, { shouldValidate: true });
+  }, [setValue]);
 
-  const handleFilesUpload = useCallback(
-    (files: readonly File[]) => {
-      const newFiles = uploadedFiles.concat(files);
-      setUploadedFiles(newFiles);
-      setValue('templateFiles', newFiles[0], { shouldValidate: true });
-    },
-    [uploadedFiles, setValue],
-  );
+  const handleJsonFileUpload = useCallback((file: File) => {
+    setUploadedJsonFile(file);
+    setValue('jsonFile', file, { shouldValidate: true });
+  }, [setValue]);
 
-  const handleFileDelete = useCallback(
-    (fileToDelete: File) => () => {
-      const filteredFiles = uploadedFiles.filter(file => file !== fileToDelete);
-      setUploadedFiles(filteredFiles);
+  const handleFileDelete = useCallback((file: File) => {
+    if (file === uploadedZipFile) {
+      setUploadedZipFile(null);
       setValue('templateFiles', undefined, { shouldValidate: true });
-    },
-    [uploadedFiles, setValue],
-  );
+    } else if (file === uploadedJsonFile) {
+      setUploadedJsonFile(null);
+      setValue('jsonFile', undefined, { shouldValidate: true });
+    }
+
+  }, [uploadedZipFile, uploadedJsonFile, setValue]);
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.form}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <FormInputField
           label="Template Name"
           registration={
@@ -138,36 +134,34 @@ const TemplateCreationFormComponent: FC<Props> = ({
           name="templateStatus"
         />
         <div className={styles.fileUploadContainer}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleFileDialogOpen}
-          >
+          <Button variant="contained" color="primary" onClick={handleFileDialogOpen}>
             Upload Template Files
           </Button>
           <div className={styles.chipsContainer}>
-            {uploadedFiles.map((file, index) => (
+            {uploadedZipFile && (
               <Chip
-                key={index}
-                label={file.name}
-                onDelete={handleFileDelete(file)}
+                label={uploadedZipFile.name}
+                onDelete={() => handleFileDelete(uploadedZipFile)}
                 color="primary"
               />
-            ))}
+            )}
+            {uploadedJsonFile && (
+              <Chip
+                label={uploadedJsonFile.name}
+                onDelete={() => handleFileDelete(uploadedJsonFile)}
+                color="primary"
+              />
+            )}
           </div>
         </div>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Submit
-        </Button>
+        <Button type="submit" variant="contained" color="primary">Submit</Button>
       </form>
+
       <FileUploadDialog
-        uploadedFiles={uploadedFiles}
+        uploadedFiles={{ zip: uploadedZipFile, json: uploadedJsonFile }}
         isFileDialogOpen={isFileDialogOpen}
-        onFilesUpload={handleFilesUpload}
+        onZipFileUpload={handleZipFileUpload}
+        onJsonFileUpload={handleJsonFileUpload}
         onFileDelete={handleFileDelete}
         onFileDialogClose={handleFileDialogClose}
       />
@@ -175,5 +169,5 @@ const TemplateCreationFormComponent: FC<Props> = ({
   );
 };
 
-/** Upload template form component. */
+/** 1. */
 export const TemplateCreationForm = memo(TemplateCreationFormComponent);

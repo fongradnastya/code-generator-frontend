@@ -18,4 +18,7 @@ export type TemplateUploadDto = {
 
   /** 1. */
   readonly file?: File;
+
+  /** 1. */
+  readonly json_file?: File;
 };
