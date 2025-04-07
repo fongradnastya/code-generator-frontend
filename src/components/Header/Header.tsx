@@ -13,7 +13,6 @@ import { setOpen } from 'src/store/drawer/slice';
 import { type NavigationProps } from 'src/utils/types/navigationProps';
 import { useAppSelector, useAppDispatch } from 'src/store';
 import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
 import CreateIcon from '@mui/icons-material/Create';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -27,7 +26,6 @@ const DRAWER_WIDTH = 280;
 
 const mainRoutes: NavigationProps[] = [
   { name: 'My Templates', path: '/templates', icon: HomeIcon },
-  { name: 'Process Template', path: '/process', icon: SettingsIcon },
   { name: 'Create Template', path: '/create', icon: CreateIcon },
 ];
 
